@@ -22,7 +22,7 @@ public class CheckForWin {
         }
         return false;
     }
-    public static Byte IsWin (List<List<Integer>> matrix) {
+    public static Byte Winner(List<List<Integer>> matrix) {
         int sums[] = {0,0,0,0,0,0,0,0};
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -30,7 +30,7 @@ public class CheckForWin {
                 sums[i+3]+=matrix.get(j).get(i);
             }
             sums[6]+=matrix.get(i).get(i);
-            sums[7]+=matrix.get(i).get(3-i);
+            sums[7]+=matrix.get(i).get(2-i);
         }
         for (int i = 0; i < 8; i++) {
             if(sums[i] ==-3) {

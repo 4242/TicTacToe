@@ -1,14 +1,14 @@
 package com.organization4242.tictactoe.tests;
 
 import com.organization4242.tictactoe.model.CheckForWin;
-import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by Евгений on 31.03.2014.
@@ -17,15 +17,15 @@ import java.util.List;
 public class CheckForWinTest {
 
     @Test
-    public void testIsWin() throws Exception {
+    public void testWinner() throws Exception {
         List<List<Integer>> matrix = new ArrayList<List<Integer>>();
-        int[][] m = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
-        for (int i = 0; i < 3; i++) {
+        int[][] m = new int[][]{{-1,-1,-1},{0,0,0},{0,0,0}};
+        for (int i = 0; i <= 2; i++) {
             matrix.add(new ArrayList<Integer>());
-            for (int j = 0; j < 3; j++) {
+            for (int j = 0; j <= 2; j++) {
                 matrix.get(i).add(m[i][j]);
             }
         }
-        CheckForWin.IsWin(matrix);
+        assertEquals((byte) CheckForWin.Winner(matrix), (byte) -1);
     }
 }

@@ -22,7 +22,7 @@ public class TicTacToeAI {
                 inspectedField.addAll(templateField);
                 if(state.getFields().get(activeField).get(i).get(j) == 0) {
                     inspectedField.get(i).set(j, 1);
-                    if(CheckForWin.IsWin(inspectedField) == 1) {
+                    if(CheckForWin.Winner(inspectedField) == 1) {
                         move = new Byte[]{(byte) i,(byte) j};
                         return move;
                     }
