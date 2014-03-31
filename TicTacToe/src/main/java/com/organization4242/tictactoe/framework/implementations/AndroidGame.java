@@ -24,8 +24,8 @@ public class AndroidGame extends Activity implements Game {
 		super.onCreate(savedInstanceState);
 
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        int frameBufferWidth = isLandscape ? 1280 : 800;
-        int frameBufferHeight = isLandscape ? 800 : 1280;
+        int frameBufferWidth = isLandscape ? 900 : 600;
+        int frameBufferHeight = isLandscape ? 600 : 900;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth, frameBufferHeight, Bitmap.Config.RGB_565);
 
         float scaleX;

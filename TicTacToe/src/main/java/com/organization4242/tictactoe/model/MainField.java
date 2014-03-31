@@ -1,5 +1,6 @@
 package com.organization4242.tictactoe.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ public class MainField {
     private boolean order;
     private int activeField;
     private List<Integer> baseField;
-    private List<List<List<Integer>>> fields;
+    private ArrayList<ArrayList<ArrayList<Integer>>> fields;
 
     public MainField setOrder(boolean order) {
         this.order = order;
@@ -26,7 +27,7 @@ public class MainField {
         return this;
     }
 
-    public MainField setFields(List<List<List<Integer>>> fields) {
+    public MainField setFields(ArrayList<ArrayList<ArrayList<Integer>>> fields) {
         this.fields = fields;
         return this;
     }
@@ -43,7 +44,7 @@ public class MainField {
         return baseField;
     }
 
-    public List<List<List<Integer>>> getFields() {
+    public ArrayList<ArrayList<ArrayList<Integer>>> getFields() {
         return fields;
     }
 }

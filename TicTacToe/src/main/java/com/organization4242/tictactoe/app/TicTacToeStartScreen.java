@@ -25,6 +25,24 @@ public class TicTacToeStartScreen extends Screen implements PropertyChangeListen
         super(game);
         this.game = game;
         input = game.getInput();
+        final ArrayList<Integer> tmp1 = new ArrayList<Integer>() {
+            {
+                add(0); add(0); add(0);
+            }
+        };
+        final ArrayList<ArrayList<Integer>> tmp2 = new ArrayList<ArrayList<Integer>>() {
+            {
+                add(tmp1); add(tmp1); add(tmp1);
+            }
+        };
+        final ArrayList<ArrayList<ArrayList<Integer>>> tmp3 = new ArrayList<ArrayList<ArrayList<Integer>>>() {
+            {
+                add(tmp2); add(tmp2); add(tmp2);
+                add(tmp2); add(tmp2); add(tmp2);
+                add(tmp2); add(tmp2); add(tmp2);
+            }
+        };
+
         mainField = new MainField().setBaseField(new ArrayList<Integer>() {
             {
                 add(0);
@@ -37,16 +55,19 @@ public class TicTacToeStartScreen extends Screen implements PropertyChangeListen
                 add(0);
                 add(0);
             }
-        });
+        }).setFields(tmp3);
+    }
+
+    private int getTouchMainField(Input.TouchEvent event) {
+        return event.getX()/600 + (event.getY()/800) *3 ;
     }
 
     @Override
     public void update(float deltaTime) {
         if (input.getTouchEvents().size() != 0) {
             Object x = input.getTouchX(Input.TouchEvent.TOUCH_DOWN);
-            Object y = input.getTouchY(Input.TouchEvent.TOUCH_DOWN);
             firePropertyChange(INPUT_EVENT, 0, new Object[] {
-                    x,y
+                    x
             });
         }
     }
@@ -67,7 +88,26 @@ public class TicTacToeStartScreen extends Screen implements PropertyChangeListen
                     cl = Color.RED;
                     break;
             }
-            game.getGraphics().drawRect((i/3)*100, (i%3)*100, 100, 100, cl);
+            game.getGraphics().drawRect((i/3)*200, (i%3)*200, 200, 200, cl);
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 3; j++)
+                for (int k = 0; k < 3; k++) {
+                    switch (mainField.getFields().get(i).get(j).get(k)) {
+                        case -1:
+                            cl = Color.BLUE;
+                            break;
+                        case 0:
+                            cl = Color.GRAY;
+                            break;
+                        case 1:
+                            cl = Color.RED;
+                            break;
+                    }
+                game.getGraphics().drawRect(10 + (i / 3) * 200 + k*60,
+                                            10 + (i % 3) * 200 + j*60,
+                                            55, 55, cl);
+            }
         }
     }
 
