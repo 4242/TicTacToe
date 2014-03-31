@@ -3,34 +3,60 @@ package com.organization4242.tictactoe.app;
 import android.graphics.Color;
 import com.organization4242.tictactoe.framework.Game;
 import com.organization4242.tictactoe.framework.Graphics;
+import com.organization4242.tictactoe.framework.Input;
 import com.organization4242.tictactoe.framework.Screen;
+import com.organization4242.tictactoe.model.MainField;
 
-import java.util.List;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * Created by ilya on 30.03.14.
  */
-public class TicTacToeStartScreen extends Screen {
-    Game game;
-    private List<Byte> baseField;
-    private List<Byte> fields;
-    private int activeField;
+public class TicTacToeStartScreen extends Screen implements PropertyChangeListener{
+    public static String INPUT_EVENT = "InputEvent";
+
+    private Game game;
+    private Input input;
+    private MainField mainField;
 
     TicTacToeStartScreen(Game game) {
         super(game);
         this.game = game;
+        input = game.getInput();
+        mainField = new MainField().setBaseField(new ArrayList<Integer>() {
+            {
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+                add(0);
+            }
+        });
     }
 
     @Override
     public void update(float deltaTime) {
+        if (input.getTouchEvents().size() != 0) {
+            Object x = input.getTouchX(Input.TouchEvent.TOUCH_DOWN);
+            Object y = input.getTouchY(Input.TouchEvent.TOUCH_DOWN);
+            firePropertyChange(INPUT_EVENT, 0, new Object[] {
+                    x,y
+            });
+        }
     }
 
     @Override
     public void present(float deltaTime) {
         Graphics g = game.getGraphics();
-        int cl;
-        for (int i = 0; i<baseField.size(); i++) {
-            switch (baseField.get(i)) {
+        int cl = 0;
+        for (int i = 0; i<mainField.getBaseField().size(); i++) {
+            switch (mainField.getBaseField().get(i)) {
                 case -1 :
                     cl = Color.BLUE;
                     break;
@@ -41,7 +67,7 @@ public class TicTacToeStartScreen extends Screen {
                     cl = Color.RED;
                     break;
             }
-            //game.getGraphics().drawRect(20*(i/180),20*(i/180));
+            game.getGraphics().drawRect((i/3)*100, (i%3)*100, 100, 100, cl);
         }
     }
 
@@ -58,5 +84,10 @@ public class TicTacToeStartScreen extends Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+        this.mainField = (MainField) propertyChangeEvent.getNewValue();
     }
 }
