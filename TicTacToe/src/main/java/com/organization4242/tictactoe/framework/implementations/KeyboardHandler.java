@@ -59,9 +59,8 @@ public class KeyboardHandler implements View.OnKeyListener {
 	}
 	public List<Input.KeyEvent> getKeyEvents(){
 		synchronized (this) {
-			int len = keyEvents.size();
-			for (int i=0; i<len; i++) {
-                keyEventPool.free(keyEvents.get(i));
+            for (Input.KeyEvent keyEvent : keyEvents) {
+                keyEventPool.free(keyEvent);
             }
 			keyEvents.clear();
 			keyEvents.addAll(keyEventBuffer);

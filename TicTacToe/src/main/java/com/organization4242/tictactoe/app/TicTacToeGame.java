@@ -9,6 +9,6 @@ import com.organization4242.tictactoe.framework.implementations.AndroidGame;
 public class TicTacToeGame extends AndroidGame {
     @Override
     public Screen getStartScreen() {
-        return new TicTacToeStartScreen();
+        return new TicTacToeStartScreen(this);
     }
 }
