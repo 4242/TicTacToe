@@ -9,34 +9,22 @@ buildscript {
 }
 
 apply plugin: 'android'
-apply plugin: 'android-apt'
-def AAVersion = '3.0.1'
 
 repositories {
     mavenCentral()
     mavenLocal()
 }
 
-ext.daggerVersion = '1.0.0';
-ext.androidAnnotationsVersion = '2.7.1';
-
-configurations {
-    apt
+sourceSets {
+    testLocal {
+        java.srcDir file('src/test/java')
+        resources.srcDir file('src/test/resources')
+    }
 }
 
 android {
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES.txt'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/notice.txt'
         exclude 'LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/dependencies.txt'
-        exclude 'META-INF/LGPL2.1'
     }
 
     compileSdkVersion 19
@@ -56,13 +44,7 @@ android {
             resources.srcDirs = ['src/main/resources']
             res.srcDirs = ['src/main/res']
             assets.srcDirs = ['src/main/assets']
-        }
-
-        test {
-            java.srcDirs = ['src/test/java']
-            resources.srcDirs = ['src/test/resources']
-            res.srcDirs = ['src/test/res']
-            assets.srcDirs = ['src/tes/assets']
+            instrumentTest.setRoot('src/test')
         }
     }
 
@@ -71,38 +53,25 @@ android {
     }
 }
 
-apt {
-    arguments {
-        androidManifestFile variant.processResources.manifestFile
-        resourcePackageName 'com.organization4242.tictactoe'
-    }
-}
-
 dependencies {
-    apt "com.googlecode.androidannotations:androidannotations:${androidAnnotationsVersion}"
-    compile "com.googlecode.androidannotations:androidannotations-api:${androidAnnotationsVersion}"
-    apt "com.squareup.dagger:dagger-compiler:${daggerVersion}"
-    compile "com.squareup.dagger:dagger:${daggerVersion}"
     compile 'com.android.support:appcompat-v7:+'
-    testCompile group: 'junit', name: 'junit', version: '4.+'
-    compile group: 'junit', name: 'junit', version: '4.+'
+    testLocalCompile 'junit:junit:4.11'
+    testLocalCompile 'com.google.android:android:4.1.1.4'
+    testLocalCompile 'org.robolectric:robolectric:2.1.+'
 }
 
-android.applicationVariants.all { variant ->
-    aptOutput = file("${project.buildDir}/source/apt_generated/${variant.dirName}")
-    println "****************************"
-    println "variant: ${variant.name}"
-    println "manifest:  ${variant.processResources.manifestFile}"
-    println "aptOutput:  ${aptOutput}"
-    println "****************************"
+task localTest(type: Test, dependsOn: assemble) {
+    testClassesDir = sourceSets.testLocal.output.classesDir
 
-    variant.javaCompile.doFirst {
-        println "*** compile doFirst ${variant.name}"
-        aptOutput.mkdirs()
-        variant.javaCompile.options.compilerArgs += [
-                '-processorpath', configurations.apt.getAsPath(),
-                '-AandroidManifestFile=' + variant.processResources.manifestFile,
-                '-s', aptOutput
-        ]
+    android.sourceSets.main.java.srcDirs.each { dir ->
+        def buildDir = dir.getAbsolutePath().split('/')
+        buildDir =  (buildDir[0..(buildDir.length - 4)] + ['build', 'classes', 'debug']).join('/')
+
+        sourceSets.testLocal.compileClasspath += files(buildDir)
+        sourceSets.testLocal.runtimeClasspath += files(buildDir)
     }
+
+    classpath = sourceSets.testLocal.runtimeClasspath
 }
+
+check.dependsOn localTest
