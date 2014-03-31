@@ -3,25 +3,30 @@ package com.organization4242.tictactoe.app;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGame;
 import com.organization4242.tictactoe.model.TicTacToeModel;
+import com.organization4242.tictactoe.view.TicTacToeStartScreen;
 
 /**
  * Created by ilya on 30.03.14.
  */
 public class TicTacToeGame extends AndroidGame {
-    private TicTacToeModel model = new TicTacToeModel();
+    private AbstractController controller = new TicTacToeController();
+
+    private TicTacToeModel model;
+    private TicTacToeStartScreen screen;
 
     public void setModel(TicTacToeModel model) {
         this.model = model;
+        controller.addModel(this.model);
     }
 
     public TicTacToeGame() {
-        model.addListener(getCurrentScreen());
+        setModel(new TicTacToeModel());
     }
 
     @Override
     public Screen getStartScreen() {
         setScreen(new TicTacToeStartScreen(this));
-        getCurrentScreen().addListener(model);
+        controller.addView(getCurrentScreen());
         return getCurrentScreen();
     }
 }

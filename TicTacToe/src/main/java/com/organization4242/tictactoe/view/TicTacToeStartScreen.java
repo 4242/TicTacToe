@@ -1,4 +1,4 @@
-package com.organization4242.tictactoe.app;
+package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
 import com.organization4242.tictactoe.framework.Game;
@@ -8,20 +8,19 @@ import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.model.MainField;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 /**
  * Created by ilya on 30.03.14.
  */
-public class TicTacToeStartScreen extends Screen implements PropertyChangeListener{
+public class TicTacToeStartScreen extends Screen {
     public static String INPUT_EVENT = "InputEvent";
 
     private Game game;
     private Input input;
     private MainField mainField;
 
-    TicTacToeStartScreen(Game game) {
+    public TicTacToeStartScreen(Game game) {
         super(game);
         this.game = game;
         input = game.getInput();
@@ -127,7 +126,7 @@ public class TicTacToeStartScreen extends Screen implements PropertyChangeListen
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-        this.mainField = (MainField) propertyChangeEvent.getNewValue();
+    public void modelPropertyChange(PropertyChangeEvent pce) {
+
     }
 }
