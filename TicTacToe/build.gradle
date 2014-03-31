@@ -57,6 +57,13 @@ android {
             res.srcDirs = ['src/main/res']
             assets.srcDirs = ['src/main/assets']
         }
+
+        test {
+            java.srcDirs = ['src/test/java']
+            resources.srcDirs = ['src/test/resources']
+            res.srcDirs = ['src/test/res']
+            assets.srcDirs = ['src/tes/assets']
+        }
     }
 
     lintOptions {
@@ -77,6 +84,7 @@ dependencies {
     apt "com.squareup.dagger:dagger-compiler:${daggerVersion}"
     compile "com.squareup.dagger:dagger:${daggerVersion}"
     compile 'com.android.support:appcompat-v7:+'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
     compile group: 'junit', name: 'junit', version: '4.+'
 }
 
