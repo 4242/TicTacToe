@@ -66,7 +66,7 @@ task localTest(type: Test, dependsOn: assemble) {
 
     android.sourceSets.main.java.srcDirs.each { dir ->
         def buildDir = dir.getAbsolutePath().split('/')
-        buildDir =  (buildDir[0..(buildDir.length-2)] + ['build', 'classes', 'debug']).join('/')
+        buildDir =  (buildDir[0..(buildDir.length-4)] + ['build', 'classes', 'debug']).join('/')
 
         sourceSets.testLocal.compileClasspath += files(buildDir)
         sourceSets.testLocal.runtimeClasspath += files(buildDir)
