@@ -1,9 +1,7 @@
 package com.organization4242.tictactoe.framework.implementations;
 
-import android.app.Activity;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
-import android.media.AudioManager;
 import android.media.SoundPool;
 import com.organization4242.tictactoe.framework.Audio;
 import com.organization4242.tictactoe.framework.Music;
@@ -14,12 +12,24 @@ import java.io.IOException;
 public class AndroidAudio implements Audio {
 	private AssetManager assets;
     private SoundPool soundPool;
-	
-	public AndroidAudio(Activity activity) {
-		activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		this.assets = activity.getAssets();
-		this.soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+
+    public void setAssets(AssetManager assets) {
+        this.assets = assets;
+    }
+
+    public void setSoundPool(SoundPool soundPool) {
+        this.soundPool = soundPool;
+    }
+
+    private static AndroidAudio audio = new AndroidAudio();
+
+	private AndroidAudio() {
+
 	}
+
+    public static AndroidAudio getInstance() {
+        return audio;
+    }
 	
 	@Override
 	public Music newMusic(String filename) {

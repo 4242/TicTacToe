@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -12,9 +14,6 @@ import com.organization4242.tictactoe.framework.*;
 
 public class AndroidGame extends Activity implements Game {
 	private AndroidFastRenderView renderView;
-	private Graphics graphics;
-    private Audio audio;
-    private Input input;
     private FileIO fileIO;
     private Screen screen;
     private PowerManager.WakeLock wakeLock;
@@ -42,9 +41,18 @@ public class AndroidGame extends Activity implements Game {
         }
 
         renderView = new AndroidFastRenderView(this, frameBuffer);
-        graphics = new AndroidGraphics(getAssets(), frameBuffer);
-        audio = new AndroidAudio(this);
-        input = new AndroidInput(this, renderView, scaleX, scaleY);
+
+        AndroidGraphics.getInstance().setAssets(getAssets());
+        AndroidGraphics.getInstance().setFrameBuffer(frameBuffer);
+
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        AndroidAudio.getInstance().setSoundPool(new SoundPool(20, AudioManager.STREAM_MUSIC, 0));
+
+        AndroidInput.getInstance().setAccelHandler(new AccelerometerHandler(this));
+        AndroidInput.getInstance().setKeyHandler(new KeyboardHandler(renderView));
+        AndroidInput.getInstance().setTouchHandler(new MultiTouchHandler(renderView, scaleX, scaleY));
+
         screen = getStartScreen();
         setContentView(renderView);
 
@@ -71,25 +79,10 @@ public class AndroidGame extends Activity implements Game {
             screen.dispose();
         }
 	}
-	
-	@Override
-	public Input getInput() {
-		return input;
-	}
 
 	@Override
 	public FileIO getFileIO() {
 		return fileIO;
-	}
-
-	@Override
-	public Audio getAudio() {
-		return audio;
-	}
-	
-	@Override
-	public Graphics getGraphics() {
-		return graphics;
 	}
 
 	@Override
@@ -107,30 +100,6 @@ public class AndroidGame extends Activity implements Game {
 
         this.screen = screen;
 	}
-
-    public void setRenderView(AndroidFastRenderView renderView) {
-        this.renderView = renderView;
-    }
-
-    public void setGraphics(Graphics graphics) {
-        this.graphics = graphics;
-    }
-
-    public void setAudio(Audio audio) {
-        this.audio = audio;
-    }
-
-    public void setInput(Input input) {
-        this.input = input;
-    }
-
-    public void setFileIO(FileIO fileIO) {
-        this.fileIO = fileIO;
-    }
-
-    public void setWakeLock(PowerManager.WakeLock wakeLock) {
-        this.wakeLock = wakeLock;
-    }
 
     @Override
 	public Screen getCurrentScreen() {

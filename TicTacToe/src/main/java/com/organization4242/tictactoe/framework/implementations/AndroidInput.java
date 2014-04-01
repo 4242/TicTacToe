@@ -11,8 +11,30 @@ public class AndroidInput implements Input {
     private AccelerometerHandler accelHandler;
     private KeyboardHandler keyHandler;
     private TouchHandler touchHandler;
-	
-	public AndroidInput(Context context, View view, float scaleX, float scaleY) {
+
+    public void setAccelHandler(AccelerometerHandler accelHandler) {
+        this.accelHandler = accelHandler;
+    }
+
+    public void setKeyHandler(KeyboardHandler keyHandler) {
+        this.keyHandler = keyHandler;
+    }
+
+    public void setTouchHandler(TouchHandler touchHandler) {
+        this.touchHandler = touchHandler;
+    }
+
+    private AndroidInput() {
+
+    }
+
+    private static AndroidInput instance = new AndroidInput();
+
+    public static AndroidInput getInstance() {
+        return instance;
+    }
+
+    public AndroidInput(Context context, View view, float scaleX, float scaleY) {
         accelHandler = new AccelerometerHandler(context);
         keyHandler = new KeyboardHandler(view);
         if (VERSION.SDK_INT < 5) {

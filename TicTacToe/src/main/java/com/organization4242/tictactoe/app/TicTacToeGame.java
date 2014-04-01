@@ -25,7 +25,7 @@ public class TicTacToeGame extends AndroidGame {
 
     @Override
     public Screen getStartScreen() {
-        setScreen(new TicTacToeStartScreen(this));
+        setScreen(new TicTacToeStartScreen());
         controller.addView(getCurrentScreen());
         return getCurrentScreen();
     }

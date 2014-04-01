@@ -1,10 +1,11 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
-import com.organization4242.tictactoe.framework.Game;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Input;
 import com.organization4242.tictactoe.framework.Screen;
+import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
+import com.organization4242.tictactoe.framework.implementations.AndroidInput;
 import com.organization4242.tictactoe.model.MainField;
 
 import java.beans.PropertyChangeEvent;
@@ -16,14 +17,9 @@ import java.util.ArrayList;
 public class TicTacToeStartScreen extends Screen {
     public static String INPUT_EVENT = "InputEvent";
 
-    private Game game;
-    private Input input;
     private MainField mainField;
 
-    public TicTacToeStartScreen(Game game) {
-        super(game);
-        this.game = game;
-        input = game.getInput();
+    public TicTacToeStartScreen() {
         final ArrayList<Integer> tmp1 = new ArrayList<Integer>() {
             {
                 add(0); add(0); add(0);
@@ -63,8 +59,8 @@ public class TicTacToeStartScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        if (input.getTouchEvents().size() != 0) {
-            Object x = input.getTouchX(Input.TouchEvent.TOUCH_DOWN);
+        if (AndroidInput.getInstance().getTouchEvents().size() != 0) {
+            Object x = AndroidInput.getInstance().getTouchX(Input.TouchEvent.TOUCH_DOWN);
             firePropertyChange(INPUT_EVENT, 0, new Object[] {
                     x
             });
@@ -73,7 +69,7 @@ public class TicTacToeStartScreen extends Screen {
 
     @Override
     public void present(float deltaTime) {
-        Graphics g = game.getGraphics();
+        Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
         for (int i = 0; i<mainField.getBaseField().size(); i++) {
             switch (mainField.getBaseField().get(i)) {
@@ -87,7 +83,7 @@ public class TicTacToeStartScreen extends Screen {
                     cl = Color.RED;
                     break;
             }
-            game.getGraphics().drawRect((i/3)*200, (i%3)*200, 200, 200, cl);
+            g.drawRect((i/3)*200, (i%3)*200, 200, 200, cl);
         }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 3; j++)
@@ -103,7 +99,7 @@ public class TicTacToeStartScreen extends Screen {
                             cl = Color.RED;
                             break;
                     }
-                game.getGraphics().drawRect(10 + (i / 3) * 200 + k*60,
+                g.drawRect(10 + (i / 3) * 200 + k*60,
                                             10 + (i % 3) * 200 + j*60,
                                             55, 55, cl);
             }

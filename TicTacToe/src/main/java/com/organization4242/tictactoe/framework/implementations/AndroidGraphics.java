@@ -18,12 +18,25 @@ public class AndroidGraphics implements Graphics {
     private Paint paint;
     private Rect srcRect = new Rect();
     private Rect dstRect = new Rect();
-	
-	public AndroidGraphics(AssetManager assets, Bitmap frameBuffer){
-		this.assets = assets;
-		this.frameBuffer = frameBuffer;
-		this.canvas = new Canvas(frameBuffer);
-		this.paint = new Paint();
+
+    private static AndroidGraphics graphics = new AndroidGraphics();
+
+    public static AndroidGraphics getInstance() {
+        return graphics;
+    }
+
+    public void setAssets(AssetManager assets) {
+        this.assets = assets;
+    }
+
+    public void setFrameBuffer(Bitmap frameBuffer) {
+        this.frameBuffer = frameBuffer;
+        this.canvas = new Canvas(this.frameBuffer);
+        this.paint = new Paint();
+    }
+
+    private AndroidGraphics(){
+
 	}
 	
 	@Override
