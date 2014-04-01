@@ -16,7 +16,7 @@ repositories {
 }
 
 sourceSets {
-    testLocal {
+    test {
         java.srcDir file('src/test/java')
         resources.srcDir file('src/test/resources')
     }
@@ -56,21 +56,18 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile 'junit:junit:4.11'
-    testLocalCompile 'junit:junit:4.11'
-    testLocalCompile 'com.google.android:android:4.1.1.4'
-    testLocalCompile 'org.robolectric:robolectric:2.1.+'
+    testCompile 'junit:junit:4.11'
+    testCompile 'com.google.android:android:4.1.1.4'
+    testCompile 'org.robolectric:robolectric:2.1.+'
 }
 
-task localTest(type: Test, dependsOn: assemble) {
-    testClassesDir = sourceSets.testLocal.output.classesDir
+task test(type: Test, dependsOn: testClasses) {
+    testClassesDir = sourceSets.test.output.classesDir
 
-    android.sourceSets.main.java.srcDirs.each { dir ->
-        def buildDir = dir.getAbsolutePath().split('/')
-        buildDir =  (buildDir[0..(buildDir.length - 4)] + ['build', 'classes', 'debug']).join('/')
+    def buildDir = [projectDir, '/build/classes/debug'].join()
 
-        sourceSets.testLocal.compileClasspath += files(buildDir)
-        sourceSets.testLocal.runtimeClasspath += files(buildDir)
-    }
+    sourceSets.test.compileClasspath += files(buildDir)
+    sourceSets.test.runtimeClasspath += files(buildDir)
 }
 
-check.dependsOn localTest
+build.dependsOn testClasses
