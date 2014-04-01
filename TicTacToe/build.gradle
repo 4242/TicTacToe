@@ -62,10 +62,7 @@ dependencies {
 }
 
 task localTest(type: Test, dependsOn: assemble) {
-    def newTestClassesDir = sourceSets.testLocal.output.classesDir.getAbsolutePath().split('/')
-    newTestClassesDir = (newTestClassesDir[0..(newTestClassesDir.length - 2)] + ['debug']).join('/')
-    testClassesDir = file(newTestClassesDir)
-    println '*********' + testClassesDir + '**********'
+    testClassesDir = sourceSets.testLocal.output.classesDir
 
     android.sourceSets.main.java.srcDirs.each { dir ->
         def buildDir = dir.getAbsolutePath().split('/')
