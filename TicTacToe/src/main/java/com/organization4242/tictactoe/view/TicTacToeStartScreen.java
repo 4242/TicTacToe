@@ -9,7 +9,6 @@ import com.organization4242.tictactoe.framework.implementations.AndroidInput;
 import com.organization4242.tictactoe.model.MainField;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 
 /**
  * Created by ilya on 30.03.14.
@@ -20,37 +19,7 @@ public class TicTacToeStartScreen extends Screen {
     private MainField mainField;
 
     public TicTacToeStartScreen() {
-        final ArrayList<Integer> tmp1 = new ArrayList<Integer>() {
-            {
-                add(0); add(0); add(0);
-            }
-        };
-        final ArrayList<ArrayList<Integer>> tmp2 = new ArrayList<ArrayList<Integer>>() {
-            {
-                add(tmp1); add(tmp1); add(tmp1);
-            }
-        };
-        final ArrayList<ArrayList<ArrayList<Integer>>> tmp3 = new ArrayList<ArrayList<ArrayList<Integer>>>() {
-            {
-                add(tmp2); add(tmp2); add(tmp2);
-                add(tmp2); add(tmp2); add(tmp2);
-                add(tmp2); add(tmp2); add(tmp2);
-            }
-        };
 
-        mainField = new MainField().setBaseField(new ArrayList<Integer>() {
-            {
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-                add(0);
-            }
-        }).setFields(tmp3);
     }
 
     private int getTouchMainField(Input.TouchEvent event) {
@@ -71,8 +40,8 @@ public class TicTacToeStartScreen extends Screen {
     public void present(float deltaTime) {
         Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
-        for (int i = 0; i<mainField.getBaseField().size(); i++) {
-            switch (mainField.getBaseField().get(i)) {
+        for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
+            switch (MainField.getInstance().getBaseField().get(i)) {
                 case -1 :
                     cl = Color.BLUE;
                     break;
@@ -88,7 +57,7 @@ public class TicTacToeStartScreen extends Screen {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 3; j++)
                 for (int k = 0; k < 3; k++) {
-                    switch (mainField.getFields().get(i).get(j).get(k)) {
+                    switch (MainField.getInstance().getFields().get(i).get(j).get(k)) {
                         case -1:
                             cl = Color.BLUE;
                             break;
