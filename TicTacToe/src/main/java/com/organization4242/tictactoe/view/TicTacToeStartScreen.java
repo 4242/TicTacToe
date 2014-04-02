@@ -1,6 +1,7 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
+import android.util.Log;
 import com.organization4242.tictactoe.app.TicTacToeController;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Input;
@@ -15,21 +16,21 @@ import java.beans.PropertyChangeEvent;
  * Created by ilya on 30.03.14.
  */
 public class TicTacToeStartScreen extends Screen {
+    StringBuilder builder = new StringBuilder();
+
     public TicTacToeStartScreen() {
 
     }
 
-    private int getTouchMainField(Input.TouchEvent event) {
-        return event.getX()/600 + (event.getY()/800) *3 ;
-    }
-
     @Override
     public void update(float deltaTime) {
+        builder.setLength(0);
+
         if (AndroidInput.getInstance().getTouchEvents().size() != 0) {
-            Object x = AndroidInput.getInstance().getTouchX(Input.TouchEvent.TOUCH_DOWN);
-            firePropertyChange(TicTacToeController.VIEW_UPDATED, 0, new Object[] {
-                    x
-            });
+            builder.append((int)AndroidInput.getInstance().getTouchX(0));
+            builder.append(' ');
+            builder.append((int)AndroidInput.getInstance().getTouchY(0));
+            Log.d("Touch coords",builder.toString());
         }
     }
 
@@ -49,9 +50,11 @@ public class TicTacToeStartScreen extends Screen {
                     cl = Color.RED;
                     break;
             }
-            g.drawRect((i/3)*200, (i%3)*200, 200, 200, cl);
+            g.drawRect((i/3)*200, (i%3)*200, 199, 199, cl);
         }
         for (int i = 0; i < 9; i++) {
+            int fieldX = i % MainField.NUMBER_OF_FIELDS;
+            int fieldY = i / MainField.NUMBER_OF_FIELDS;
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     switch (MainField.getInstance().getFields().get(i).get(j).get(k)) {
@@ -65,9 +68,9 @@ public class TicTacToeStartScreen extends Screen {
                             cl = Color.RED;
                             break;
                     }
-                    g.drawRect(10 + (i / 3) * 200 + k * 60,
-                            10 + (i % 3) * 200 + j * 60,
-                            55, 55, cl);
+                    g.drawRect(10*(1 + fieldX) + fieldX * (56*MainField.NUMBER_OF_FIELDS+22) + k * 62,
+                               10*(1 + fieldY) + fieldY * (56*MainField.NUMBER_OF_FIELDS+22) + j * 62,
+                               56, 56, cl);
                 }
             }
         }

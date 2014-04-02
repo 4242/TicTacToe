@@ -16,6 +16,8 @@ import com.organization4242.tictactoe.framework.Screen;
 
 public class AndroidGame extends Activity implements Game {
     private final static String TAG = "***Android Game*** : ";
+    public final static int FRAME_WIDTH = 900;
+    public final static int FRAME_HEIGHT = 600;
 
 	private AndroidFastRenderView renderView;
     private Screen screen;
@@ -26,8 +28,8 @@ public class AndroidGame extends Activity implements Game {
 		super.onCreate(savedInstanceState);
 
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        int frameBufferWidth = isLandscape ? 900 : 600;
-        int frameBufferHeight = isLandscape ? 600 : 900;
+        int frameBufferWidth = isLandscape ? FRAME_WIDTH : FRAME_HEIGHT;
+        int frameBufferHeight = isLandscape ? FRAME_HEIGHT : FRAME_WIDTH;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth, frameBufferHeight, Bitmap.Config.RGB_565);
 
         float scaleX;

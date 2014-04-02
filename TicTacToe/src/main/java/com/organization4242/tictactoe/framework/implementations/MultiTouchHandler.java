@@ -116,7 +116,7 @@ public class MultiTouchHandler implements TouchHandler{
 				if (pointer < 0 || pointer >=20) {
                     return 0;
                 } else {
-                    return touchX[pointer];
+                    return touchY[pointer];
                 }
 			}
 		}
