@@ -1,6 +1,5 @@
 package com.organization4242.tictactoe.ai;
 
-import com.organization4242.tictactoe.model.CheckForWin;
 import com.organization4242.tictactoe.model.MainField;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public final class TicTacToeAI {
                 inspectedField.addAll(templateField);
                 if(state.getFields().get(activeField).get(i).get(j).equals(MainField.EMPTY)) {
                     inspectedField.get(i).set((byte) j, MainField.X);
-                    if(CheckForWin.winner(inspectedField).equals(MainField.X)) {
+                    if(MainField.winner(inspectedField).equals(MainField.X)) {
                         move = new Byte[]{(byte) i,(byte) j};
                         return move;
                     }

@@ -78,4 +78,47 @@ public final class MainField {
     public static MainField getInstance() {
         return instance;
     }
+
+
+    public static boolean isWinBoolean (List<List<Integer>> matrix, boolean order) {
+        int sums[] = {0,0,0,0,0,0,0,0};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                sums[i]+=matrix.get(i).get(j);
+                sums[i+3]+=matrix.get(j).get(i);
+            }
+            sums[6]+=matrix.get(i).get(i);
+            sums[7]+=matrix.get(i).get(3-i);
+        }
+        for (int i = 0; i < 8; i++) {
+            if( order && sums[i]== 3) {
+                return true;
+            }
+            if(!order && sums[i]==-3) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static Byte winner(List<List<Byte>> matrix) {
+        int sums[] = {0,0,0,0,0,0,0,0};
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                sums[i]+=matrix.get(i).get(j);
+                sums[i+3]+=matrix.get(j).get(i);
+            }
+            sums[6]+=matrix.get(i).get(i);
+            sums[7]+=matrix.get(i).get(2-i);
+        }
+        for (int i = 0; i < 8; i++) {
+            if(sums[i] ==-3) {
+                return -1;
+            } else if (sums[i]== 3) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        return 0;
+    }
 }

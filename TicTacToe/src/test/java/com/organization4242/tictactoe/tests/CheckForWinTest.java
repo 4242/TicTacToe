@@ -1,6 +1,6 @@
 package com.organization4242.tictactoe.tests;
 
-import com.organization4242.tictactoe.model.CheckForWin;
+import com.organization4242.tictactoe.model.MainField;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -26,6 +26,6 @@ public class CheckForWinTest {
                 matrix.get(i).add(m[i][j]);
             }
         }
-        assertEquals((byte) CheckForWin.winner(matrix), (byte) -1);
+        assertEquals((byte) MainField.winner(matrix), (byte) -1);
     }
 }
