@@ -14,6 +14,7 @@ public final class MainField {
 
     private boolean order;
     private byte activeField;
+    private byte previousField;
     private List<Byte> baseField;
     private List<List<List<Byte>>> fields;
 
@@ -24,6 +25,11 @@ public final class MainField {
 
     public MainField setActiveField(byte activeField) {
         this.activeField = activeField;
+        return this;
+    }
+
+    public MainField setPreviousField(byte previousField) {
+        this.previousField = previousField;
         return this;
     }
 
@@ -43,6 +49,10 @@ public final class MainField {
 
     public byte getActiveField() {
         return activeField;
+    }
+
+    public byte getPreviousField() {
+        return previousField;
     }
 
     public List<Byte> getBaseField() {

@@ -24,10 +24,16 @@ public class TicTacToeStartScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        int touchedFieldX, touchedFieldY;
+        int touchedMainFieldX, touchedMainFieldY, touchedFieldX, touchedFieldY;
         for (int i = 0; i <20; i++){
             if (AndroidInput.getInstance().isTouchDown(i)){
-                touchedFieldX = AndroidInput.getInstance().getTouchX(i);
+                touchedMainFieldX = AndroidInput.getInstance().getTouchX(i)/200;
+                touchedMainFieldY = AndroidInput.getInstance().getTouchY(i)/200;
+                touchedFieldX = AndroidInput.getInstance().getTouchX(i)/60 ;     // пересчитать координаты потом
+                touchedFieldY = AndroidInput.getInstance().getTouchY(i)/60;     // здесь тоже
+                if((MainField.getInstance().getActiveField() == 0) ||
+                   (MainField.getInstance().getActiveField() == touchedMainFieldX+touchedMainFieldY*MainField.NUMBER_OF_FIELDS) )
+                    ;
             }
         }
 
