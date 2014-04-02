@@ -41,8 +41,8 @@ public class AndroidGame extends Activity implements Game {
         } else {
             Point point = new Point();
             getWindowManager().getDefaultDisplay().getSize(point);
-            scaleX = point.x;
-            scaleY = point.y;
+            scaleX = (float) frameBufferWidth/point.x;
+            scaleY = (float) frameBufferHeight/point.y;
         }
 
         renderView = new AndroidFastRenderView(this, frameBuffer);

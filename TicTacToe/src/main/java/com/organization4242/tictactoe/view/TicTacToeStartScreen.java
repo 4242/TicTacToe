@@ -24,8 +24,14 @@ public class TicTacToeStartScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        builder.setLength(0);
+        int touchedFieldX, touchedFieldY;
+        for (int i = 0; i <20; i++){
+            if (AndroidInput.getInstance().isTouchDown(i)){
+                touchedFieldX = AndroidInput.getInstance().getTouchX(i);
+            }
+        }
 
+        builder.setLength(0);
         if (AndroidInput.getInstance().getTouchEvents().size() != 0) {
             builder.append((int)AndroidInput.getInstance().getTouchX(0));
             builder.append(' ');
