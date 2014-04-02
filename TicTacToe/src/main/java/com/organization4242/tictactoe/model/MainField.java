@@ -110,6 +110,7 @@ public final class MainField {
         }
         return false;
     }
+
     public static Byte winner(List<List<Byte>> matrix) {
         int sums[] = {0,0,0,0,0,0,0,0};
         for (int i = 0; i < 3; i++) {

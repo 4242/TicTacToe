@@ -1,8 +1,5 @@
 package com.organization4242.tictactoe.framework.implementations;
 
-import android.content.Context;
-import android.os.Build.VERSION;
-import android.view.View;
 import com.organization4242.tictactoe.framework.Input;
 
 import java.util.List;
@@ -33,16 +30,6 @@ public class AndroidInput implements Input {
     public static AndroidInput getInstance() {
         return instance;
     }
-
-    public AndroidInput(Context context, View view, float scaleX, float scaleY) {
-        accelHandler = new AccelerometerHandler(context);
-        keyHandler = new KeyboardHandler(view);
-        if (VERSION.SDK_INT < 5) {
-            touchHandler = new SingleTouchHandler(view, scaleX, scaleY);
-        } else {
-            touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
-        }
-	}
 
 	@Override
 	public boolean isKeyPressed(int keyCode) {
