@@ -10,18 +10,14 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
     private MediaPlayer mediaPlayer;
     private boolean isPrepared = false;
 	
-	public AndroidMusic(AssetFileDescriptor assetDescriptor) {
+	public AndroidMusic(AssetFileDescriptor assetDescriptor) throws IOException {
 		mediaPlayer = new MediaPlayer();
-		try {
-			mediaPlayer.setDataSource(assetDescriptor.getFileDescriptor(),
-					assetDescriptor.getStartOffset(),
-					assetDescriptor.getLength());
-			mediaPlayer.prepare();
-			isPrepared = true;
-			mediaPlayer.setOnCompletionListener(this);
-		} catch (IOException e) {
-			throw new RuntimeException ("�� ���� ���������� ����");
-		}
+        mediaPlayer.setDataSource(assetDescriptor.getFileDescriptor(),
+                assetDescriptor.getStartOffset(),
+                assetDescriptor.getLength());
+        mediaPlayer.prepare();
+        isPrepared = true;
+        mediaPlayer.setOnCompletionListener(this);
 	}
 	
 	@Override
@@ -54,21 +50,15 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
     }
     
 	@Override
-	public void play() {
+	public void play() throws IOException {
 		if (mediaPlayer.isPlaying()) {
             return;
         }
-		try {
-			synchronized (this) {
-				if (!isPrepared) {
-                    mediaPlayer.prepare();
-                }
-				mediaPlayer.start();
-			}
-		} catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        synchronized (this) {
+            if (!isPrepared) {
+                mediaPlayer.prepare();
+            }
+            mediaPlayer.start();
         }
 	}
 	

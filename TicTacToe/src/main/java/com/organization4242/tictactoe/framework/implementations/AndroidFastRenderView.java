@@ -12,7 +12,7 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable{
     private Thread renderThread = null;
     private SurfaceHolder holder;
     private volatile boolean running = false;
-	
+
 	public AndroidFastRenderView(AndroidGame game, Bitmap frameBuffer){
 		super(game);
 		this.game = game;
@@ -49,15 +49,11 @@ public class AndroidFastRenderView extends SurfaceView implements Runnable{
 		}
 	}
 	
-	public void pause() {
+	public void pause() throws InterruptedException {
 		running = false;
 		while(true) {
-			try {
-				renderThread.join();
-				break;
-			} catch (InterruptedException e) {
-				//������
-			}
+            renderThread.join();
+            break;
 		}
 	}
 }

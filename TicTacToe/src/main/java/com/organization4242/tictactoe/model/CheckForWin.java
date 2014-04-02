@@ -5,8 +5,10 @@ import java.util.List;
 /**
  * Created by Евгений on 31.03.2014.
  */
-public class CheckForWin {
-    public static boolean IsWinBoolean (List<List<Integer>> matrix, boolean order) {
+public final class CheckForWin {
+    private CheckForWin() {}
+
+    public static boolean isWinBoolean (List<List<Integer>> matrix, boolean order) {
         int sums[] = {0,0,0,0,0,0,0,0};
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -17,12 +19,16 @@ public class CheckForWin {
             sums[7]+=matrix.get(i).get(3-i);
         }
         for (int i = 0; i < 8; i++) {
-            if( order && sums[i]== 3) return true;
-            if(!order && sums[i]==-3) return true;
+            if( order && sums[i]== 3) {
+                return true;
+            }
+            if(!order && sums[i]==-3) {
+                return true;
+            }
         }
         return false;
     }
-    public static Byte Winner(List<List<Byte>> matrix) {
+    public static Byte winner(List<List<Byte>> matrix) {
         int sums[] = {0,0,0,0,0,0,0,0};
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

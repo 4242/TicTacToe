@@ -1,17 +1,9 @@
 package com.organization4242.tictactoe.framework;
 
 public interface Game {
-	//public Input getInput();
+    void setScreen(Screen screen);
 
-	//public Graphics getGraphics();
-	
-	public FileIO getFileIO();
+    Screen getCurrentScreen();
 
-	//public Audio getAudio();
-
-	public void setScreen(Screen screen);
-
-	public Screen getCurrentScreen();
-
-	public Screen getStartScreen();
+    Screen getStartScreen();
 }

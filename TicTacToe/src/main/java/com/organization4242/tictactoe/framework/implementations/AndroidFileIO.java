@@ -6,18 +6,22 @@ import com.organization4242.tictactoe.framework.FileIO;
 
 import java.io.*;
 
-public class AndroidFileIO implements FileIO{
+public final class AndroidFileIO implements FileIO{
     private AssetManager assets;
     private String externalStoragePath;
-	
-	public AndroidFileIO(AssetManager assets) {
-		this.assets = assets;
-		StringBuilder strbuilder = new StringBuilder();
-		strbuilder.append(Environment.getExternalStorageDirectory().getAbsolutePath());
-		strbuilder.append(File.separator);
-		this.externalStoragePath = strbuilder.toString();
-		//		+ File.separator; // ������� �� ��� ���������� ����� ������������
-	}
+    private static AndroidFileIO instance = new AndroidFileIO();
+
+    public void setAssets(AssetManager assets) {
+        this.assets = assets;
+        this.externalStoragePath =
+                Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
+    }
+
+    public static AndroidFileIO getInstance() {
+        return instance;
+    }
+
+    private AndroidFileIO() {}
 	
 	@Override
 	public InputStream readAsset(String fileName) throws IOException {

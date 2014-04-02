@@ -10,11 +10,14 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import com.organization4242.tictactoe.framework.*;
+import android.util.Log;
+import com.organization4242.tictactoe.framework.Game;
+import com.organization4242.tictactoe.framework.Screen;
 
 public class AndroidGame extends Activity implements Game {
+    private final static String TAG = "***Android Game*** : ";
+
 	private AndroidFastRenderView renderView;
-    private FileIO fileIO;
     private Screen screen;
     private PowerManager.WakeLock wakeLock;
 	
@@ -53,6 +56,8 @@ public class AndroidGame extends Activity implements Game {
         AndroidInput.getInstance().setKeyHandler(new KeyboardHandler(renderView));
         AndroidInput.getInstance().setTouchHandler(new MultiTouchHandler(renderView, scaleX, scaleY));
 
+        AndroidFileIO.getInstance().setAssets(getAssets());
+
         screen = getStartScreen();
         setContentView(renderView);
 
@@ -72,17 +77,16 @@ public class AndroidGame extends Activity implements Game {
 	public void onPause(){
 		super.onPause();
 		wakeLock.release();
-		renderView.pause();
-		screen.pause();
+        try {
+            renderView.pause();
+        } catch (InterruptedException e) {
+            Log.e(TAG, "", e);
+        }
+        screen.pause();
 		
 		if(isFinishing()) {
             screen.dispose();
         }
-	}
-
-	@Override
-	public FileIO getFileIO() {
-		return fileIO;
 	}
 
 	@Override

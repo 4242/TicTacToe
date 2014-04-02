@@ -1,7 +1,9 @@
 package com.organization4242.tictactoe.framework;
 
-public interface Audio {
-	public Music newMusic(String fileName);
+import java.io.IOException;
 
-	public Sound newSound(String fileName);
+public interface Audio {
+    Music newMusic(String fileName) throws IOException;
+
+    Sound newSound(String fileName) throws IOException;
 }

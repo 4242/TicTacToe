@@ -1,6 +1,7 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
+import com.organization4242.tictactoe.app.TicTacToeController;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Input;
 import com.organization4242.tictactoe.framework.Screen;
@@ -14,10 +15,6 @@ import java.beans.PropertyChangeEvent;
  * Created by ilya on 30.03.14.
  */
 public class TicTacToeStartScreen extends Screen {
-    public static String INPUT_EVENT = "InputEvent";
-
-    private MainField mainField;
-
     public TicTacToeStartScreen() {
 
     }
@@ -30,7 +27,7 @@ public class TicTacToeStartScreen extends Screen {
     public void update(float deltaTime) {
         if (AndroidInput.getInstance().getTouchEvents().size() != 0) {
             Object x = AndroidInput.getInstance().getTouchX(Input.TouchEvent.TOUCH_DOWN);
-            firePropertyChange(INPUT_EVENT, 0, new Object[] {
+            firePropertyChange(TicTacToeController.VIEW_UPDATED, 0, new Object[] {
                     x
             });
         }
@@ -55,7 +52,7 @@ public class TicTacToeStartScreen extends Screen {
             g.drawRect((i/3)*200, (i%3)*200, 200, 200, cl);
         }
         for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     switch (MainField.getInstance().getFields().get(i).get(j).get(k)) {
                         case -1:
@@ -68,9 +65,10 @@ public class TicTacToeStartScreen extends Screen {
                             cl = Color.RED;
                             break;
                     }
-                g.drawRect(10 + (i / 3) * 200 + k*60,
-                                            10 + (i % 3) * 200 + j*60,
-                                            55, 55, cl);
+                    g.drawRect(10 + (i / 3) * 200 + k * 60,
+                            10 + (i % 3) * 200 + j * 60,
+                            55, 55, cl);
+                }
             }
         }
     }

@@ -1,21 +1,23 @@
 package com.organization4242.tictactoe.framework;
 
+import java.io.IOException;
+
 public interface Music {
-	public void play();
+    void play() throws IOException;
 	
-	public void stop();
+    void stop();
 	
-	public void pause();
+    void pause();
 	
-	public void setLooping(boolean looping);
+    void setLooping(boolean looping);
+
+    void setVolume(float volume);
+
+    boolean isPlaying();
 	
-	public void setVolume(float volume);
+    boolean isStopped();
 	
-	public boolean isPlaying();
+    boolean isLooping();
 	
-	public boolean isStopped();
-	
-	public boolean isLooping();
-	
-	public void dispose();
+    void dispose();
 }

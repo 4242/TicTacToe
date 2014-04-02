@@ -11,7 +11,7 @@ import com.organization4242.tictactoe.framework.Pixmap;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class AndroidGraphics implements Graphics {
+public final class AndroidGraphics implements Graphics {
     private AssetManager assets;
     private Bitmap frameBuffer;
     private Canvas canvas;
@@ -40,8 +40,7 @@ public class AndroidGraphics implements Graphics {
 	}
 	
 	@Override
-	public Pixmap newPixmap(String fileName, PixmapFormat format)
-	{
+	public Pixmap newPixmap(String fileName, PixmapFormat format) throws IOException {
 		Config config;
         PixmapFormat newFormat;
 		if (format == PixmapFormat.RGB565) {
@@ -61,24 +60,18 @@ public class AndroidGraphics implements Graphics {
 			in = assets.open(fileName);
 			bitmap = BitmapFactory.decodeStream(in);
 			if (bitmap == null) {
-                throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
+                throw new IOException(String.format("Couldn't load bitmap from asset '%s'", fileName));
             }
-		}
-		catch (IOException e) {
-			throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
 		}
 		finally {
 			if (in != null) {
-				try {
-					in.close();
-				} catch (IOException e) {
-				}
+                in.close();
 			}
 		}
 
-		if (bitmap != null && bitmap.getConfig() == Config.RGB_565) {
+		if (bitmap.getConfig() == Config.RGB_565) {
             newFormat = PixmapFormat.RGB565;
-        } else if (bitmap != null && bitmap.getConfig() == Config.ARGB_4444) {
+        } else if (bitmap.getConfig() == Config.ARGB_4444) {
             newFormat = PixmapFormat.ARGB4444;
         } else {
             newFormat = PixmapFormat.ARGB888;

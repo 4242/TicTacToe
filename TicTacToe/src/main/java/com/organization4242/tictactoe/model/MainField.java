@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by ilya on 31.03.14.
  */
-public class MainField {
+public final class MainField {
     public static final int NUMBER_OF_FIELDS = 3;
     public static final Byte EMPTY = 0;
     public static final Byte O = -1;
@@ -15,7 +15,7 @@ public class MainField {
     private boolean order;
     private byte activeField;
     private List<Byte> baseField;
-    private ArrayList<ArrayList<ArrayList<Byte>>> fields;
+    private List<List<List<Byte>>> fields;
 
     public MainField setOrder(boolean order) {
         this.order = order;
@@ -32,7 +32,7 @@ public class MainField {
         return this;
     }
 
-    public MainField setFields(ArrayList<ArrayList<ArrayList<Byte>>> fields) {
+    public MainField setFields(List<List<List<Byte>>> fields) {
         this.fields = fields;
         return this;
     }
@@ -49,7 +49,7 @@ public class MainField {
         return baseField;
     }
 
-    public ArrayList<ArrayList<ArrayList<Byte>>> getFields() {
+    public List<List<List<Byte>>> getFields() {
         return fields;
     }
 
@@ -63,9 +63,9 @@ public class MainField {
         }
 
         //Initialize fields with zero elements
-        fields = new ArrayList<ArrayList<ArrayList<Byte>>>();
+        fields = new ArrayList<List<List<Byte>>>();
         for (int i = 0; i < baseField.size(); i++) {
-            fields.add(new ArrayList<ArrayList<Byte>>());
+            fields.add(new ArrayList<List<Byte>>());
             for (int j = 0; j < baseField.size(); j++) {
                 fields.get(i).add(new ArrayList<Byte>());
                 for (Byte b : baseField) {

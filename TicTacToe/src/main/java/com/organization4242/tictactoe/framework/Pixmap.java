@@ -1,11 +1,11 @@
 package com.organization4242.tictactoe.framework;
 
 public interface Pixmap {
-	public int getWidth();
+    int getWidth();
 	
-	public int getHeight();
+    int getHeight();
 	
-	public Graphics.PixmapFormat getFormat();
+    Graphics.PixmapFormat getFormat();
 	
-	public void dispose();
+    void dispose();
 }

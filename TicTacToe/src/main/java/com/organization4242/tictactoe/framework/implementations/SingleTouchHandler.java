@@ -7,7 +7,7 @@ import com.organization4242.tictactoe.framework.Input;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleTouchHandler implements TouchHandler{ //��� ������ ������ Android
+public class SingleTouchHandler implements TouchHandler{
     private boolean isTouched;
     private int touchX;
     private int touchY;
