@@ -2,6 +2,8 @@ package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import com.organization4242.tictactoe.app.TicTacToeController;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
@@ -14,60 +16,13 @@ import java.beans.PropertyChangeEvent;
 /**
  * Created by ilya on 30.03.14.
  */
-public class TicTacToeStartScreen extends Screen {
+public class TicTacToeStartScreen extends Screen{
     StringBuilder builder = new StringBuilder();
 
     public TicTacToeStartScreen() {
-
+        drawField();
     }
-
-    @Override
-    public void update(float deltaTime) {
-        int touchedMainFieldX, touchedMainFieldY, touchedFieldX, touchedFieldY;
-        for (int i = 0; i <20; i++){
-            if (AndroidInput.getInstance().isTouchDown(i)){
-                touchedMainFieldX = AndroidInput.getInstance().getTouchX(i)/200;
-                touchedMainFieldY = AndroidInput.getInstance().getTouchY(i)/200;
-                touchedFieldX = AndroidInput.getInstance().getTouchX(i)/60 ;     // пересчитать координаты потом
-                touchedFieldY = AndroidInput.getInstance().getTouchY(i)/60;     // здесь тоже
-                if((MainField.getInstance().getActiveField() == 0) ||
-                   (MainField.getInstance().getActiveField() == touchedMainFieldX+touchedMainFieldY*MainField.NUMBER_OF_FIELDS) )
-                    ;
-                firePropertyChange(TicTacToeController.VIEW_UPDATED, 0, new byte[]{0,1,2,3,1});
-            }
-        }
-
-        builder.setLength(0);
-        if (AndroidInput.getInstance().getTouchEvents().size() != 0) {
-            builder.append((int)AndroidInput.getInstance().getTouchX(0));
-            builder.append(' ');
-            builder.append((int)AndroidInput.getInstance().getTouchY(0));
-            Log.d("Touch coords",builder.toString());
-        }
-    }
-
-    @Override
-    public void present(float deltaTime) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void modelPropertyChange(PropertyChangeEvent pce) {
+    private void drawField(){
         Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
         for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
@@ -106,5 +61,56 @@ public class TicTacToeStartScreen extends Screen {
                 }
             }
         }
+    }
+    @Override
+    public void update(float deltaTime) {
+        int touchedMainFieldX, touchedMainFieldY, touchedFieldX, touchedFieldY;
+        AndroidInput input = AndroidInput.getInstance();
+        for (int i = 0; i <20; i++){
+            if (AndroidInput.getInstance().isTouchDown(i)){
+                touchedMainFieldX = AndroidInput.getInstance().getTouchX(i)/200;
+                touchedMainFieldY = AndroidInput.getInstance().getTouchY(i)/200;
+                touchedFieldX = AndroidInput.getInstance().getTouchX(i)/60 %3;     // пересчитать координаты потом
+                touchedFieldY = AndroidInput.getInstance().getTouchY(i)/60 %3;     // здесь тоже
+                if((MainField.getInstance().getActiveField() == 0) ||
+                        (MainField.getInstance().getActiveField() == touchedMainFieldX+touchedMainFieldY*MainField.NUMBER_OF_FIELDS) )
+                    ;
+                firePropertyChange(TicTacToeController.VIEW_UPDATED, 0,
+                        new byte[]{(byte) (touchedMainFieldX+3*touchedMainFieldY), (byte) touchedFieldX, (byte) touchedFieldY});
+                builder.setLength(0);
+                builder.append(touchedMainFieldX);
+                builder.append(' ');
+                builder.append(touchedMainFieldY);
+                builder.append(' ');
+                builder.append(touchedFieldX);
+                builder.append(' ');
+                builder.append(touchedFieldY);
+                Log.d("Touch coords",builder.toString());
+            }
+        }
+    }
+
+    @Override
+    public void present(float deltaTime) {
+        drawField();
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void modelPropertyChange(PropertyChangeEvent pce) {
     }
 }

@@ -1,5 +1,6 @@
 package com.organization4242.tictactoe.framework;
 
+import android.view.View;
 import com.organization4242.tictactoe.view.AbstractView;
 
 public abstract class Screen extends AbstractView {

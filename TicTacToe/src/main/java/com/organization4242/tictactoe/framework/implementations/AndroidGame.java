@@ -62,6 +62,7 @@ public class AndroidGame extends Activity implements Game {
 
         screen = getStartScreen();
         setContentView(renderView);
+        //renderView.setOnTouchListener(screen);
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "GLGame");
