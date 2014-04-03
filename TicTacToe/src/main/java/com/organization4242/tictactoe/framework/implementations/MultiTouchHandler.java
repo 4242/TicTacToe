@@ -86,18 +86,18 @@ public class MultiTouchHandler implements TouchHandler{
 			return true;
 		}
 	}
-		
-		@Override
-		public boolean isTouchDown(int pointer) {
-			synchronized (this) {
-				if (pointer < 0 || pointer >=20) {
-                    return false;
-                }
-				else {
-                    return isTouched[pointer];
-                }
-			}
-		}
+
+    @Override
+    public boolean isTouchDown(int pointer) {
+        synchronized (this) {
+            if (pointer < 0 || pointer >=20) {
+                return false;
+            }
+            else {
+                return isTouched[pointer];
+            }
+        }
+    }
 
 		@Override
 		public int getTouchX(int pointer){

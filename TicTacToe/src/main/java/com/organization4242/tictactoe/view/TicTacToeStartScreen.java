@@ -21,25 +21,40 @@ public class TicTacToeStartScreen extends Screen{
         drawField();
     }
     private void drawField(){
+        int fieldX, fieldY;
         Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
         for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
             switch (MainField.getInstance().getBaseField().get(i)) {
                 case -1 :
-                    cl = Color.BLUE;
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                        cl = Color.rgb(0, 0, 255);
+                    } else {
+                        cl = Color.rgb(0, 0, 128);
+                    }
                     break;
                 case 0 :
-                    cl = Color.WHITE;
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                        cl = Color.rgb(150, 150, 150);
+                    } else {
+                        cl = Color.rgb(75, 75, 75);
+                    }
                     break;
                 case 1 :
-                    cl = Color.RED;
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                        cl = Color.rgb(255, 0, 0);
+                    } else {
+                        cl = Color.rgb(128, 0, 128);
+                    }
                     break;
             }
-            g.drawRect((i/3)*200, (i%3)*200, 199, 199, cl);
+            fieldX = i % 3;
+            fieldY = i / 3;
+            g.drawRect(1 + fieldX * 190, 1 + fieldY * 190, 188, 188, cl);
         }
         for (int i = 0; i < 9; i++) {
-            int fieldX = i % MainField.NUMBER_OF_FIELDS;
-            int fieldY = i / MainField.NUMBER_OF_FIELDS;
+            fieldX = i % 3;
+            fieldY = i / 3;
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     switch (MainField.getInstance().getFields().get(i).get(j).get(k)) {
@@ -47,15 +62,14 @@ public class TicTacToeStartScreen extends Screen{
                             cl = Color.BLUE;
                             break;
                         case 0:
-                            cl = Color.GRAY;
+                            cl = Color.WHITE;
                             break;
                         case 1:
                             cl = Color.RED;
                             break;
                     }
-                    g.drawRect(10*(1 + fieldX) + fieldX * (56*MainField.NUMBER_OF_FIELDS+22) + k * 62,
-                            10*(1 + fieldY) + fieldY * (56*MainField.NUMBER_OF_FIELDS+22) + j * 62,
-                            56, 56, cl);
+                    g.drawRect(10 + fieldX * 190 + k * 60, 10 + fieldY * 190 + j * 60,
+                            50, 50, cl);
                 }
             }
         }
@@ -66,15 +80,14 @@ public class TicTacToeStartScreen extends Screen{
         AndroidInput input = AndroidInput.getInstance();
         for (int i = 0; i <20; i++){
             if (AndroidInput.getInstance().isTouchDown(i)){
-                touchedMainFieldX = AndroidInput.getInstance().getTouchX(i)/200;
-                touchedMainFieldY = AndroidInput.getInstance().getTouchY(i)/200;
-                touchedFieldX = AndroidInput.getInstance().getTouchX(i)/60 %3;     // пересчитать координаты потом
-                touchedFieldY = AndroidInput.getInstance().getTouchY(i)/60 %3;     // здесь тоже
-                if((MainField.getInstance().getActiveField() == 0) ||
-                        (MainField.getInstance().getActiveField() == touchedMainFieldX+touchedMainFieldY*MainField.NUMBER_OF_FIELDS) )
-                    ;
-                firePropertyChange(TicTacToeController.VIEW_UPDATED, 0,
-                        new byte[]{(byte) (touchedMainFieldX+3*touchedMainFieldY), (byte) touchedFieldX, (byte) touchedFieldY});
+                touchedMainFieldX = AndroidInput.getInstance().getTouchX(i)/190;
+                touchedMainFieldY = AndroidInput.getInstance().getTouchY(i)/190;
+                touchedFieldX = (AndroidInput.getInstance().getTouchX(i) % 190 - 5) / 60;
+                touchedFieldY = (AndroidInput.getInstance().getTouchY(i) % 190 - 5) / 60;
+                if ( (touchedMainFieldX < 3) && (touchedFieldY < 3) ) {
+                    firePropertyChange(TicTacToeController.VIEW_UPDATED, 0,
+                            new byte[]{(byte) (touchedMainFieldX + 3 * touchedMainFieldY), (byte) touchedFieldX, (byte) touchedFieldY});
+                }
                 builder.setLength(0);
                 builder.append(touchedMainFieldX+3*touchedMainFieldY);
                 builder.append(' ');

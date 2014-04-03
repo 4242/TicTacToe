@@ -92,15 +92,13 @@ public final class MainField extends AbstractModel {
     public void viewPropertyChange(PropertyChangeEvent pce) {
         byte[] coordinates = (byte[]) pce.getNewValue();
 
-        if (coordinates[0] == activeField
-                && fields.get(coordinates[0]).get(coordinates[1]).get(coordinates[2]).equals(EMPTY)) {
-            fields.get(coordinates[0]).get(coordinates[1]).set(coordinates[2], order);
+        if (coordinates[0] == activeField //&& coordinates[0] != previousField
+                && fields.get(coordinates[0]).get(coordinates[2]).get(coordinates[1]).equals(EMPTY)) {
+            fields.get(coordinates[0]).get(coordinates[2]).set(coordinates[1], order);
             order = (byte) ((byte) -1 * order);
-            if (previousField == activeField) {
-                previousField = activeField;
-                activeField = (byte) (coordinates[1]*3 + coordinates[2]);
-                firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
-            }
+            previousField = activeField;
+            activeField = (byte) (coordinates[1] + coordinates[2]*3);
+            firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
     }
 

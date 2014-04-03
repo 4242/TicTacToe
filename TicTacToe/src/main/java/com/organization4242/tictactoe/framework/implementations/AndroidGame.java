@@ -16,8 +16,8 @@ import com.organization4242.tictactoe.framework.Screen;
 
 public class AndroidGame extends Activity implements Game {
     private final static String TAG = "***Android Game*** : ";
-    public final static int FRAME_WIDTH = 900;
-    public final static int FRAME_HEIGHT = 600;
+    public final static int FRAME_WIDTH = 855;
+    public final static int FRAME_HEIGHT = 570;
 
 	private AndroidFastRenderView renderView;
     private Screen screen;
