@@ -1,12 +1,13 @@
 package com.organization4242.tictactoe.model;
 
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ilya on 31.03.14.
  */
-public final class MainField {
+public final class MainField extends AbstractModel {
     public static final int NUMBER_OF_FIELDS = 3;
     public static final Byte EMPTY = 0;
     public static final Byte O = -1;
@@ -83,6 +84,11 @@ public final class MainField {
                 }
             }
         }
+    }
+
+    @Override
+    public void viewPropertyChange(PropertyChangeEvent pce) {
+
     }
 
     public static MainField getInstance() {

@@ -8,10 +8,8 @@ import java.util.List;
 /**
  * Created by ilya on 31.03.14.
  */
-public final class TicTacToeAI {
-    private TicTacToeAI() {}
-
-    public static Byte[] nextMove(MainField state) {
+public final class TicTacToeAI implements AI {
+    public Byte[] nextMove(MainField state) {
         byte activeField = state.getActiveField();
         boolean order = state.getOrder();
         Byte[] move = new Byte[]{0,0};
@@ -31,6 +29,5 @@ public final class TicTacToeAI {
             }
         }
         return move;
-
     }
 }
