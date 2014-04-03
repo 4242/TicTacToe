@@ -14,9 +14,10 @@ public final class MainField extends AbstractModel {
     public static final Byte EMPTY = 0;
     public static final Byte O = -1;
     public static final Byte X = 1;
+    public static final Byte ANY = 10;
 
     private Byte order;
-    private byte activeField;
+    private byte activeField = ANY;
     private byte previousField = 10;
     private List<Byte> baseField;
     private List<List<List<Byte>>> fields;
