@@ -2,8 +2,6 @@ package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import com.organization4242.tictactoe.app.TicTacToeController;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
@@ -110,5 +108,6 @@ public class TicTacToeStartScreen extends Screen{
 
     @Override
     public void modelPropertyChange(PropertyChangeEvent pce) {
+        drawField();
     }
 }

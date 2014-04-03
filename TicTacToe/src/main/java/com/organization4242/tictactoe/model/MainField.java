@@ -96,6 +96,8 @@ public final class MainField extends AbstractModel {
                 && fields.get(coordinates[0]).get(coordinates[1]).get(coordinates[2]).equals(EMPTY)) {
             fields.get(coordinates[0]).get(coordinates[1]).set(coordinates[2], order);
             order = (byte) ((byte) -1 * order);
+            previousField = activeField;
+            activeField = (byte) (coordinates[1]*3 + coordinates[2]);
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
     }
