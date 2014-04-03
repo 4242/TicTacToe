@@ -10,7 +10,7 @@ import java.util.List;
  * Created by ilya on 31.03.14.
  */
 public final class MainField extends AbstractModel {
-    public static final int NUMBER_OF_FIELDS = 3;
+    public static final int NUMBER_OF_FIELD = 3;
     public static final Byte EMPTY = 0;
     public static final Byte O = -1;
     public static final Byte X = 1;
@@ -72,7 +72,7 @@ public final class MainField extends AbstractModel {
     private MainField() {
         //Initialize base field with zero elements
         baseField = new ArrayList<Byte>();
-        for (int i = 0; i < Math.pow(NUMBER_OF_FIELDS, 2); i++) {
+        for (int i = 0; i < Math.pow(NUMBER_OF_FIELD, 2); i++) {
             baseField.add(EMPTY);
         }
 
@@ -87,6 +87,20 @@ public final class MainField extends AbstractModel {
                 }
             }
         }
+    }
+
+    public List<byte[]> freePoints() {
+        List<byte[]> points = new ArrayList<byte[]>();
+        List<List<Byte>> currentField = new ArrayList<List<Byte>>();
+        currentField.addAll(fields.get(activeField));
+        for (int i = 0; i < MainField.NUMBER_OF_FIELD; i++) {
+            for (int j = 0; j < MainField.NUMBER_OF_FIELD; j++) {
+                if (currentField.get(i).get(j).equals(MainField.EMPTY)) {
+                    points.add(new byte[]{(byte) i,(byte) j});
+                }
+            }
+        }
+        return points;
     }
 
     @Override
@@ -127,7 +141,6 @@ public final class MainField extends AbstractModel {
                 return -1;
             } else if (sums[i]== 3) {
                 return 1;
-            } else {
             }
         }
         return 0;
