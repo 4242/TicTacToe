@@ -78,9 +78,7 @@ public class TicTacToeStartScreen extends Screen{
                 firePropertyChange(TicTacToeController.VIEW_UPDATED, 0,
                         new byte[]{(byte) (touchedMainFieldX+3*touchedMainFieldY), (byte) touchedFieldX, (byte) touchedFieldY});
                 builder.setLength(0);
-                builder.append(touchedMainFieldX);
-                builder.append(' ');
-                builder.append(touchedMainFieldY);
+                builder.append(touchedMainFieldX+3*touchedMainFieldY);
                 builder.append(' ');
                 builder.append(touchedFieldX);
                 builder.append(' ');
