@@ -1,5 +1,7 @@
 package com.organization4242.tictactoe.model;
 
+import com.organization4242.tictactoe.app.TicTacToeController;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,14 @@ public final class MainField extends AbstractModel {
 
     @Override
     public void viewPropertyChange(PropertyChangeEvent pce) {
+        byte[] coordinates = (byte[]) pce.getNewValue();
 
+        if (coordinates[0] == activeField
+                && fields.get(coordinates[0]).get(coordinates[1]).get(coordinates[2]).equals(EMPTY)) {
+            fields.get(coordinates[0]).get(coordinates[1]).set(coordinates[2], order);
+            order = (byte) (-1 * order);
+            firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
+        }
     }
 
     public static MainField getInstance() {

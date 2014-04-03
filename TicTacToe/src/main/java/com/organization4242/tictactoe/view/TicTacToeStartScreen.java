@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.util.Log;
 import com.organization4242.tictactoe.app.TicTacToeController;
 import com.organization4242.tictactoe.framework.Graphics;
-import com.organization4242.tictactoe.framework.Input;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
 import com.organization4242.tictactoe.framework.implementations.AndroidInput;
@@ -34,6 +33,7 @@ public class TicTacToeStartScreen extends Screen {
                 if((MainField.getInstance().getActiveField() == 0) ||
                    (MainField.getInstance().getActiveField() == touchedMainFieldX+touchedMainFieldY*MainField.NUMBER_OF_FIELDS) )
                     ;
+                firePropertyChange(TicTacToeController.VIEW_UPDATED, 0, new byte[]{0,1,2,3,1});
             }
         }
 
@@ -48,6 +48,26 @@ public class TicTacToeStartScreen extends Screen {
 
     @Override
     public void present(float deltaTime) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void modelPropertyChange(PropertyChangeEvent pce) {
         Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
         for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
@@ -81,30 +101,10 @@ public class TicTacToeStartScreen extends Screen {
                             break;
                     }
                     g.drawRect(10*(1 + fieldX) + fieldX * (56*MainField.NUMBER_OF_FIELDS+22) + k * 62,
-                               10*(1 + fieldY) + fieldY * (56*MainField.NUMBER_OF_FIELDS+22) + j * 62,
-                               56, 56, cl);
+                            10*(1 + fieldY) + fieldY * (56*MainField.NUMBER_OF_FIELDS+22) + j * 62,
+                            56, 56, cl);
                 }
             }
         }
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public void modelPropertyChange(PropertyChangeEvent pce) {
-
     }
 }
