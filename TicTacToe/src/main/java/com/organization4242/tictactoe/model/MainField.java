@@ -13,13 +13,13 @@ public final class MainField extends AbstractModel {
     public static final Byte O = -1;
     public static final Byte X = 1;
 
-    private boolean order;
+    private Byte order;
     private byte activeField;
     private byte previousField;
     private List<Byte> baseField;
     private List<List<List<Byte>>> fields;
 
-    public MainField setOrder(boolean order) {
+    public MainField setOrder(Byte order) {
         this.order = order;
         return this;
     }
@@ -44,7 +44,7 @@ public final class MainField extends AbstractModel {
         return this;
     }
 
-    public boolean getOrder() {
+    public Byte getOrder() {
         return order;
     }
 
@@ -133,7 +133,6 @@ public final class MainField extends AbstractModel {
             } else if (sums[i]== 3) {
                 return 1;
             } else {
-                return 0;
             }
         }
         return 0;
