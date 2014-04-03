@@ -27,21 +27,21 @@ public class TicTacToeStartScreen extends Screen{
         for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
             switch (MainField.getInstance().getBaseField().get(i)) {
                 case -1 :
-                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == 10) {
                         cl = Color.rgb(0, 0, 255);
                     } else {
                         cl = Color.rgb(0, 0, 128);
                     }
                     break;
                 case 0 :
-                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == 10) {
                         cl = Color.rgb(150, 150, 150);
                     } else {
                         cl = Color.rgb(75, 75, 75);
                     }
                     break;
                 case 1 :
-                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == -10) {
+                    if (i == MainField.getInstance().getActiveField() || MainField.getInstance().getActiveField() == 10) {
                         cl = Color.rgb(255, 0, 0);
                     } else {
                         cl = Color.rgb(128, 0, 128);
