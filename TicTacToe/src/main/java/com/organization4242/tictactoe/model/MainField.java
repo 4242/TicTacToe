@@ -97,35 +97,18 @@ public final class MainField extends AbstractModel {
             fields.get(coordinates[0]).get(coordinates[2]).set(coordinates[1], order);
             order = (byte) ((byte) -1 * order);
             previousField = activeField;
-            activeField = (byte) (coordinates[1] + coordinates[2]*3);
+            activeField = (byte) (coordinates[1] + coordinates[2] * 3);
+            if (winner(fields.get(coordinates[0])).equals(X)) {
+                baseField.set(coordinates[0], X);
+            } else if (winner(fields.get(coordinates[0])).equals(O)) {
+                baseField.set(coordinates[0], O);
+            }
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
     }
 
     public static MainField getInstance() {
         return instance;
-    }
-
-
-    public static boolean isWinBoolean (List<List<Integer>> matrix, boolean order) {
-        int sums[] = {0,0,0,0,0,0,0,0};
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                sums[i]+=matrix.get(i).get(j);
-                sums[i+3]+=matrix.get(j).get(i);
-            }
-            sums[6]+=matrix.get(i).get(i);
-            sums[7]+=matrix.get(i).get(3-i);
-        }
-        for (int i = 0; i < 8; i++) {
-            if( order && sums[i]== 3) {
-                return true;
-            }
-            if(!order && sums[i]==-3) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static Byte winner(List<List<Byte>> matrix) {
