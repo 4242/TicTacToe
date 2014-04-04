@@ -128,6 +128,20 @@ public final class MainField extends AbstractModel {
                 baseField.set(coordinates[0], O);
             }
             if (isFilled(fields.get(activeField))) activeField = ANY;
+            
+            AI ai = new TicTacToeAI(this);
+            byte[] move = ai.nextMove();
+            
+            fields.get(activeField).get(move[0]).set(move[1], order);
+            order = (byte) ((byte) -1 * order);
+            if (winner(fields.get(activeField)).equals(X) && (baseField.get(activeField) == EMPTY)) {
+                baseField.set(move[0], X);
+            } else if (winner(fields.get(activeField)).equals(O) && (baseField.get(activeField) == EMPTY)) {
+                baseField.set(move[0], O);   
+            }
+            
+            activeField = move[0] + 3 * move[1];
+
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
     }
