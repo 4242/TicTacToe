@@ -30,8 +30,8 @@ public final class TicTacToeAI implements AI {
             templateField.add(new ArrayList<Byte>());
             inspectedField.add(new ArrayList<Byte>());
             for (Byte b : l) {
-                templateField.get(i).add(b);
-                inspectedField.get(i).add(b);
+                templateField.get(i).add(new Byte(b));
+                inspectedField.get(i).add(new Byte(b));
             }
         }
         for (int i = 0; i < MainField.NUMBER_OF_FIELDS; i++) {
