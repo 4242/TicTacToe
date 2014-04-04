@@ -34,8 +34,8 @@ public final class TicTacToeAI implements AI {
                 inspectedField.get(i).add(b);
             }
         }
-        for (int i = 0; i < MainField.NUMBER_OF_FIELD; i++) {
-            for (int j = 0; j < MainField.NUMBER_OF_FIELD; j++) {
+        for (int i = 0; i < MainField.NUMBER_OF_FIELDS; i++) {
+            for (int j = 0; j < MainField.NUMBER_OF_FIELDS; j++) {
                 if (templateField.get(i).get(j).equals(MainField.EMPTY)) {
                     inspectedField.get(i).set((byte) j, order);
                     if (MainField.winner(inspectedField).equals(order)) {
@@ -63,8 +63,8 @@ public final class TicTacToeAI implements AI {
             return move;
         }
         Random r = new Random();
-        int randomPoint = r.nextInt(state.freePoints().size());
-        move = state.freePoints().get(randomPoint);
+        //int randomPoint = r.nextInt(state.freePoints().size());
+        //move = state.freePoints().get(randomPoint);
         return move;
     }
 }
