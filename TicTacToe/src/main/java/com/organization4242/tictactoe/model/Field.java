@@ -1,15 +1,44 @@
 package com.organization4242.tictactoe.model;
 
+import java.util.ArrayList;
+
 /**
  * Created by ilya on 04.04.14.
  */
-public interface Field {
-    boolean add(State state);
-    State get(int index);
-    State set(int index, State state);
+public class Field implements FieldInterface {
+    private ArrayList<State> list;
 
-    State getWinner();
-    boolean hasWinner();
+    public Field(int capacity) {
+        list = new ArrayList<State>(capacity);
+    }
 
-    byte[] getEmptyFields();
+    @Override
+    public State getWinner() {
+        return null;
+    }
+
+    @Override
+    public boolean hasWinner() {
+        return false;
+    }
+
+    @Override
+    public byte[] getEmptyFields() {
+        return new byte[0];
+    }
+
+    @Override
+    public void add(State object) {
+        list.add(object);
+    }
+
+    @Override
+    public State get(int index) {
+        return list.get(index);
+    }
+
+    @Override
+    public void set(int index, State object) {
+        list.set(index, object);
+    }
 }

@@ -1,6 +1,6 @@
 package com.organization4242.tictactoe.model;
 
-import com.organization4242.tictactoe.app.Controller;
+import com.organization4242.tictactoe.controller.Controller;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public final class MainField extends AbstractModel {
     private State order;
     private byte activeField;
     private byte previousField;
-    private Field baseField;
-    private List<Field> fields;
+    private FieldInterface baseField;
+    private List<FieldInterface> fields;
 
     private static MainField instance = new MainField();
 
@@ -25,11 +25,11 @@ public final class MainField extends AbstractModel {
         return activeField;
     }
 
-    public Field getBaseField() {
+    public FieldInterface getBaseField() {
         return baseField;
     }
 
-    public List<Field> getFields() {
+    public List<FieldInterface> getFields() {
         return fields;
     }
 
@@ -45,10 +45,10 @@ public final class MainField extends AbstractModel {
         activeField = ANY;
         previousField = ANY;
         order = State.X;
-        baseField = new TicTacToeField(NUMBER_OF_FIELDS);
-        fields = new ArrayList<Field>(NUMBER_OF_FIELDS);
+        baseField = new Field(NUMBER_OF_FIELDS);
+        fields = new ArrayList<FieldInterface>(NUMBER_OF_FIELDS);
         for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            fields.add(new TicTacToeField(NUMBER_OF_FIELDS));
+            fields.add(new Field(NUMBER_OF_FIELDS));
             for (int j = 0; j < NUMBER_OF_FIELDS; j++) {
                 fields.get(i).add(State.EMPTY);
             }
@@ -65,9 +65,17 @@ public final class MainField extends AbstractModel {
         firePropertyChange(Controller.MODEL_UPDATED, 0, 1);
     }
 
+    private void clear() {
+        instance = new MainField();
+    }
+
     @Override
     public void viewPropertyChange(PropertyChangeEvent pce) {
-        byte[] coordinates = (byte[]) pce.getNewValue();
-        makeMove(coordinates[0], coordinates[1]);
+        if (pce.getPropertyName().equals(Controller.VIEW_UPDATED)) {
+            byte[] coordinates = (byte[]) pce.getNewValue();
+            makeMove(coordinates[0], coordinates[1]);
+        } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
+            clear();
+        }
     }
 }
