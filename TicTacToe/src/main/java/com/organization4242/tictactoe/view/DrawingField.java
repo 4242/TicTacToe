@@ -3,7 +3,6 @@ package com.organization4242.tictactoe.view;
 import android.graphics.Color;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
-import com.organization4242.tictactoe.model.MainField;
 
 /**
  * Created by ilya on 04.04.14.
@@ -17,12 +16,11 @@ public class DrawingField {//extends DrawingFieldContainer {
 
     private Graphics g = AndroidGraphics.getInstance();
 
-    public DrawingField(int width, int height) {
-        //super(width, height);
-        this.width = (int) (width /
-                Math.sqrt(MainField.NUMBER_OF_FIELDS));
-        this.height = (int) (height /
-                Math.sqrt(MainField.NUMBER_OF_FIELDS));
+    public DrawingField(int x, int y, int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
     }
 
     public int getWidth() {
@@ -33,20 +31,21 @@ public class DrawingField {//extends DrawingFieldContainer {
         return height;
     }
 
-    public void setX(int x) {
-        this.x = x * width;
+    public int getX() {
+        return x;
     }
 
-    public void setY(int y) {
-        this.y = y * height;
+    public int getY() {
+        return y;
     }
 
     public void setColor(int color) {
         this.color = color;
     }
 
-    public boolean isInside(int i, int j) {
-        return false;
+    public boolean contains(int i, int j) {
+        return i >= x && i <= x + width
+                && j >= y && y <= y + height;
     }
 
     public void draw() {

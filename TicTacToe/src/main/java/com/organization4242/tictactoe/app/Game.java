@@ -3,7 +3,7 @@ package com.organization4242.tictactoe.app;
 import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGame;
-import com.organization4242.tictactoe.model.MainField;
+import com.organization4242.tictactoe.model.MainFieldModel;
 import com.organization4242.tictactoe.view.GameScreen;
 
 /**
@@ -14,7 +14,7 @@ public class Game extends AndroidGame {
     private GameScreen screen;
 
     public Game() {
-        controller.addModel(MainField.getInstance());
+        controller.addModel(MainFieldModel.getInstance());
     }
 
     @Override

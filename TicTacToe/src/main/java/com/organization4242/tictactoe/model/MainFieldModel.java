@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by ilya on 31.03.14.
  */
-public final class MainField extends AbstractModel {
+public final class MainFieldModel extends AbstractModel {
     public static final int NUMBER_OF_FIELDS = 9;
     public static final Byte ANY = 10;
 
@@ -19,7 +19,7 @@ public final class MainField extends AbstractModel {
     private FieldInterface baseField;
     private List<FieldInterface> fields;
 
-    private static MainField instance = new MainField();
+    private static MainFieldModel instance = new MainFieldModel();
 
     public byte getActiveField() {
         return activeField;
@@ -37,11 +37,11 @@ public final class MainField extends AbstractModel {
         return order;
     }
 
-    public static MainField getInstance() {
+    public static MainFieldModel getInstance() {
         return instance;
     }
 
-    private MainField() {
+    private MainFieldModel() {
         activeField = ANY;
         previousField = ANY;
         order = State.X;
@@ -66,7 +66,7 @@ public final class MainField extends AbstractModel {
     }
 
     private void clear() {
-        instance = new MainField();
+        instance = new MainFieldModel();
     }
 
     @Override

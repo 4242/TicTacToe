@@ -1,6 +1,6 @@
 package com.organization4242.tictactoe.controller;
 
-import com.organization4242.tictactoe.model.MainField;
+import com.organization4242.tictactoe.model.MainFieldModel;
 import com.organization4242.tictactoe.view.AbstractView;
 
 import java.beans.PropertyChangeEvent;
@@ -18,7 +18,7 @@ public class Controller extends AbstractController {
         if (pce.getSource() instanceof AbstractView) {
             if (pce.getPropertyName().equals(MODEL_UPDATED)) {
                 byte[] move = (byte[]) pce.getNewValue();
-                if (MainField.getInstance().canMove(move[0], move[1])) {
+                if (MainFieldModel.getInstance().canMove(move[0], move[1])) {
                     super.propertyChange(pce);
                 }
             } else if (pce.getPropertyName().equals(DISPOSING)) {

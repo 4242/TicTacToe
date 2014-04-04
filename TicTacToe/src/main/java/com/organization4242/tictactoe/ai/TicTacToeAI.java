@@ -1,6 +1,6 @@
 package com.organization4242.tictactoe.ai;
 
-import com.organization4242.tictactoe.model.MainField;
+import com.organization4242.tictactoe.model.MainFieldModel;
 import com.organization4242.tictactoe.model.State;
 
 /**
@@ -8,9 +8,9 @@ import com.organization4242.tictactoe.model.State;
  */
 public final class TicTacToeAI implements AI {
 
-    MainField state;
+    MainFieldModel state;
 
-    public TicTacToeAI(MainField state) {
+    public TicTacToeAI(MainFieldModel state) {
         this.state = state;
     }
 
@@ -28,8 +28,8 @@ public final class TicTacToeAI implements AI {
 //                templateField.get(i).add(new Byte(b));
 //            }
 //        }
-//        for (int i = 0; i < MainField.NUMBER_OF_FIELDS; i++) {
-//            for (int j = 0; j < MainField.NUMBER_OF_FIELDS; j++) {
+//        for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
+//            for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
 //                if (templateField.get(i).get(j).equals(State.EMPTY)) {
 //                    List<List<Byte>> inspectedField = new ArrayList<List<Byte>>();
 //                    for (int k = 0; k < actField.size(); k++) {
@@ -40,7 +40,7 @@ public final class TicTacToeAI implements AI {
 //                        }
 //                    }
 //                    inspectedField.get(i).set((byte) j, order);
-//                    if (MainField.winner(inspectedField).equals(order)) {
+//                    if (MainFieldModel.winner(inspectedField).equals(order)) {
 //                        move = new byte[]{(byte) i, (byte) j};
 //                        return move;
 //                    }

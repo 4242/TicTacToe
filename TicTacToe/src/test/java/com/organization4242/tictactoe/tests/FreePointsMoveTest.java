@@ -8,7 +8,7 @@ import org.junit.Test;
 public class FreePointsMoveTest {
     @Test
     public void freePointMoveTest() {
-//        TicTacToeAI ai = new TicTacToeAI(MainField.getInstance());
+//        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
 //        List<List<Byte>> matrix = new ArrayList<List<Byte>>();
 //        byte[][] m = new byte[][]{{-1,0,0},{0,0,0},{0,0,0}};
 //        for (int i = 0; i <= 2; i++) {
@@ -22,8 +22,8 @@ public class FreePointsMoveTest {
 //            fields.add(matrix);
 //        }
 //
-//        MainField state = MainField.getInstance();
-//        state.setActiveField((byte) 1).setOrder(MainField.O).setFields(fields);
+//        MainFieldModel state = MainFieldModel.getInstance();
+//        state.setActiveField((byte) 1).setOrder(MainFieldModel.O).setFields(fields);
 //        List<byte[]> points = state.freePoints();
 
     }

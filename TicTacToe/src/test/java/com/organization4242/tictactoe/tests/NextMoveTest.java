@@ -22,8 +22,8 @@ public class NextMoveTest {
 //            fields.add(matrix);
 //        }
 //
-//        MainField.getInstance().setActiveField((byte) 1).setOrder(MainField.O).setFields(fields);
-//        AI ai = new TicTacToeAI(MainField.getInstance());
+//        MainFieldModel.getInstance().setActiveField((byte) 1).setOrder(MainFieldModel.O).setFields(fields);
+//        AI ai = new TicTacToeAI(MainFieldModel.getInstance());
 //        byte[] b = ai.nextMove();
 
     }

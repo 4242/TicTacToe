@@ -20,6 +20,6 @@ public class CheckForWinTest {
 //                matrix.get(i).add(m[i][j]);
 //            }
 //        }
-//        assertEquals((byte) MainField.winner(matrix), (byte) -1);
+//        assertEquals((byte) MainFieldModel.winner(matrix), (byte) -1);
     }
 }
