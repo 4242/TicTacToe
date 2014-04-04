@@ -16,7 +16,7 @@ public class TicTacToeGame extends AndroidGame {
     public TicTacToeGame() {
         MainField.getInstance().setOrder(MainField.X);
         controller.addModel(MainField.getInstance());
-        controller.setAi(new TicTacToeAI());
+        controller.setAi(new TicTacToeAI(MainField.getInstance()));
     }
 
     @Override

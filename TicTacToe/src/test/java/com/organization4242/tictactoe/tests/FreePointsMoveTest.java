@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * Created by Евгений on 03.04.2014.
  */
-public class NextMoveTest {
+public class FreePointsMoveTest {
     @Test
-    public void nextMoveTest() {
-
+    public void freePointMoveTest() {
+        TicTacToeAI ai = new TicTacToeAI(MainField.getInstance());
         List<List<Byte>> matrix = new ArrayList<List<Byte>>();
         byte[][] m = new byte[][]{{-1,0,0},{0,0,0},{0,0,0}};
         for (int i = 0; i <= 2; i++) {
@@ -28,9 +28,9 @@ public class NextMoveTest {
             fields.add(matrix);
         }
 
-        MainField.getInstance().setActiveField((byte) 1).setOrder(MainField.O).setFields(fields);
-        AI ai = new TicTacToeAI(MainField.getInstance());
-        byte[] b = ai.nextMove();
+        MainField state = MainField.getInstance();
+        state.setActiveField((byte) 1).setOrder(MainField.O).setFields(fields);
+        List<byte[]> points = state.freePoints();
 
     }
 }

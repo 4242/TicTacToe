@@ -89,30 +89,21 @@ public final class MainField extends AbstractModel {
         }
     }
 
-    private boolean isFilled(List<List<Byte>> field){
-        boolean res = true;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-               res = res && (field.get(i).get(j) != EMPTY) ;
-        return res;
-    }
-
     @Override
     public void viewPropertyChange(PropertyChangeEvent pce) {
         byte[] coordinates = (byte[]) pce.getNewValue();
 
-        if ((coordinates[0] == activeField || activeField == ANY)
+        if (coordinates[0] == activeField //&& coordinates[0] != previousField
                 && fields.get(coordinates[0]).get(coordinates[2]).get(coordinates[1]).equals(EMPTY)) {
             fields.get(coordinates[0]).get(coordinates[2]).set(coordinates[1], order);
             order = (byte) ((byte) -1 * order);
             previousField = activeField;
             activeField = (byte) (coordinates[1] + coordinates[2] * 3);
-            if (winner(fields.get(coordinates[0])).equals(X) && (baseField.get(coordinates[0]) == EMPTY)) {
+            if (winner(fields.get(coordinates[0])).equals(X)) {
                 baseField.set(coordinates[0], X);
-            } else if (winner(fields.get(coordinates[0])).equals(O) && (baseField.get(coordinates[0]) == EMPTY)) {
+            } else if (winner(fields.get(coordinates[0])).equals(O)) {
                 baseField.set(coordinates[0], O);
             }
-            if (isFilled(fields.get(activeField))) activeField = ANY;
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
     }
