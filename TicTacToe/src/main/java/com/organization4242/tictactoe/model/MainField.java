@@ -11,6 +11,7 @@ import java.util.List;
  */
 public final class MainField extends AbstractModel {
     public static final int NUMBER_OF_FIELDS = 3;
+    public static final int NUMBER_OF_FIELD = 3;
     public static final Byte EMPTY = 0;
     public static final Byte O = -1;
     public static final Byte X = 1;
@@ -87,6 +88,20 @@ public final class MainField extends AbstractModel {
                 }
             }
         }
+    }
+
+    public List<byte[]> freePoints() {
+        List<byte[]> points = new ArrayList<byte[]>();
+        List<List<Byte>> currentField = new ArrayList<List<Byte>>();
+        currentField.addAll(fields.get(activeField));
+        for (int i = 0; i < MainField.NUMBER_OF_FIELD; i++) {
+            for (int j = 0; j < MainField.NUMBER_OF_FIELD; j++) {
+                if (currentField.get(i).get(j).equals(MainField.EMPTY)) {
+                    points.add(new byte[]{(byte) i,(byte) j});
+                }
+            }
+        }
+        return points;
     }
 
     private boolean isFilled(List<List<Byte>> field) {
