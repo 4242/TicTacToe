@@ -1,10 +1,8 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
-import android.text.method.Touch;
 import android.util.Log;
-import com.organization4242.tictactoe.app.R;
-import com.organization4242.tictactoe.app.TicTacToeController;
+import com.organization4242.tictactoe.app.Controller;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Input;
 import com.organization4242.tictactoe.framework.Screen;
@@ -38,9 +36,9 @@ public class TicTacToeStartScreen extends Screen{
         int fieldX, fieldY;
         Graphics g = AndroidGraphics.getInstance();
         int cl = 0;
-        for (int i = 0; i < MainField.getInstance().getBaseField().size(); i++) {
+        for (int i = 0; i < MainField.NUMBER_OF_FIELDS; i++) {
             switch (MainField.getInstance().getBaseField().get(i)) {
-                case -1 :
+                case O :
                     if (i == MainField.getInstance().getActiveField() ||
                             MainField.getInstance().getActiveField() == MainField.ANY) {
                         cl = Color.BLUE;
@@ -48,7 +46,7 @@ public class TicTacToeStartScreen extends Screen{
                         cl = Color.BLUE;
                     }
                     break;
-                case 0 :
+                case EMPTY :
                     if (i == MainField.getInstance().getActiveField() ||
                             MainField.getInstance().getActiveField() == MainField.ANY) {
                         cl = Color.GRAY;
@@ -56,7 +54,7 @@ public class TicTacToeStartScreen extends Screen{
                         cl = Color.DKGRAY;
                     }
                     break;
-                case 1 :
+                case X :
                     if (i == MainField.getInstance().getActiveField() ||
                             MainField.getInstance().getActiveField() == MainField.ANY) {
                         cl = Color.RED;
@@ -73,21 +71,19 @@ public class TicTacToeStartScreen extends Screen{
             fieldX = i % 3;
             fieldY = i / 3;
             for (int j = 0; j < 3; j++) {
-                for (int k = 0; k < 3; k++) {
-                    switch (MainField.getInstance().getFields().get(i).get(j).get(k)) {
-                        case -1:
+                    switch (MainField.getInstance().getFields().get(i).get(j)) {
+                        case O:
                             cl = Color.BLUE;
                             break;
-                        case 0:
+                        case EMPTY:
                             cl = Color.rgb(255, 255, 255);
                             break;
-                        case 1:
+                        case X:
                             cl = Color.RED;
                             break;
                     }
-                    g.drawRect(10 + fieldX * 190 + k * 60, 10 + fieldY * 190 + j * 60,
+                    g.drawRect(10 + fieldX * 190 + ((j + 1) - (j + 1) % 3) * 60, 10 + fieldY * 190 + j * 60,
                             50, 50, cl);
-                }
             }
         }
     }
@@ -121,7 +117,7 @@ public class TicTacToeStartScreen extends Screen{
                 touchedFieldX = (event.getX() % 190 - 5) / 60;
                 touchedFieldY = (event.getY() % 190 - 5) / 60;
                 if ( (touchedMainFieldX < 3) && (touchedFieldY < 3) ) {
-                    firePropertyChange(TicTacToeController.VIEW_UPDATED, 0,
+                    firePropertyChange(Controller.VIEW_UPDATED, 0,
                             new byte[]{(byte) (touchedMainFieldX + 3 * touchedMainFieldY), (byte) touchedFieldX, (byte) touchedFieldY});
                 }
                 builder.setLength(0);
