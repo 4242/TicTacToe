@@ -142,7 +142,7 @@ public final class MainField extends AbstractModel {
                 baseField.set(move[0], O);   
             }
             
-            activeField = (byte)(move[0] + 3 * move[1]);
+            activeField = (byte)(move[1] + 3 * move[0]);
 
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
