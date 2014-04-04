@@ -1,5 +1,7 @@
 package com.organization4242.tictactoe.model;
 
+import com.organization4242.tictactoe.ai.AI;
+import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.app.TicTacToeController;
 
 import java.beans.PropertyChangeEvent;
@@ -140,7 +142,7 @@ public final class MainField extends AbstractModel {
                 baseField.set(move[0], O);   
             }
             
-            activeField = move[0] + 3 * move[1];
+            activeField = (byte)(move[0] + 3 * move[1]);
 
             firePropertyChange(TicTacToeController.MODEL_UPDATED, 0, 1);
         }
