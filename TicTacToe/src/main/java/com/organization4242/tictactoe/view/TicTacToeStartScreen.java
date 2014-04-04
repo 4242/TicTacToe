@@ -79,7 +79,7 @@ public class TicTacToeStartScreen extends Screen{
                             cl = Color.BLUE;
                             break;
                         case 0:
-                            cl = Color.WHITE;
+                            cl = (int) R.color.white;
                             break;
                         case 1:
                             cl = Color.RED;
