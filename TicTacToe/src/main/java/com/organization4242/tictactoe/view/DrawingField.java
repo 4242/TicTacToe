@@ -16,10 +16,10 @@ public class DrawingField {//extends DrawingFieldContainer {
     private Graphics g = AndroidGraphics.getInstance();
 
     public DrawingField(int x, int y, int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
     }
 
     public int getWidth() {

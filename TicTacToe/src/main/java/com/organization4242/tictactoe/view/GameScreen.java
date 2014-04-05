@@ -30,13 +30,13 @@ public class GameScreen extends Screen {
             int width = g.getWidth()/numberOfColumns;
 
             //Adding 9 big fields, corresponding to baseField in MainFieldModel
-            field.add(new DrawingFieldContainer((i / numberOfColumns) * width, (i % numberOfColumns) * width, width, width));
+            field.add(new DrawingFieldContainer((i % numberOfColumns) * width, (i / numberOfColumns) * width, width, width));
             field.get(i).setColor(Color.BLACK);
 
             //Adding 9 internal fields to each field in base fields
             for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
-                field.get(i).add(new DrawingField(field.get(i).getX() + (j / numberOfColumns) * width / numberOfColumns,
-                        field.get(i).getY() + (j % numberOfColumns) * width /numberOfColumns,
+                field.get(i).add(new DrawingField(field.get(i).getX() + (j % numberOfColumns) * width / numberOfColumns,
+                        field.get(i).getY() + (j / numberOfColumns) * width /numberOfColumns,
                         width/numberOfColumns, width /numberOfColumns));
                 field.get(i).get(j).setColor(Color.WHITE);
             }
