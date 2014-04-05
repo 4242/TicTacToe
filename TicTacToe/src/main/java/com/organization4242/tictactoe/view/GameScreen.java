@@ -99,11 +99,12 @@ public class GameScreen extends Screen {
         MainFieldModelMessage message = (MainFieldModelMessage) pce.getNewValue();
         field.get(message.getI()).get(message.getJ()).setColor(FieldColor.fromState(message.getOrder()));
         field.get(message.getI()).get(message.getJ()).draw();
-        //field.get(value[3]).setColor(Color.GREEN);
         if (pce.getPropertyName().equals(Controller.LOCAL_WIN)
                 || pce.getPropertyName().equals(Controller.WIN)) {
             field.get(message.getI()).setColor(FieldColor.fromState(message.getOrder()));
             field.get(message.getI()).draw();
         }
+        field.get(message.getActiveField()).setColor(Color.GREEN);
+        field.get(message.getActiveField()).draw();
     }
 }
