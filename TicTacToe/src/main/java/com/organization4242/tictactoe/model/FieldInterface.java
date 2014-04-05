@@ -10,6 +10,8 @@ public interface FieldInterface {
     State get(int index);
     void set(int index, State state);
 
+    int size();
+
     State getWinner();
     boolean hasWinner();
 

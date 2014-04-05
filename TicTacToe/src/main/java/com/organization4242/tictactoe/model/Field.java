@@ -20,7 +20,10 @@ public class Field implements FieldInterface {
                 || list.get(6) + list.get(7) + list.get(8) == 3 * State.toByte(order)
                 || list.get(0) + list.get(4) + list.get(8) == 3 * State.toByte(order)
                 || list.get(2) + list.get(4) + list.get(6) == 3 * State.toByte(order)
-                || list.get(6) + list.get(7) + list.get(8) == 3 * State.toByte(order);
+                || list.get(6) + list.get(7) + list.get(8) == 3 * State.toByte(order)
+                || list.get(0) + list.get(3) + list.get(6) == 3 * State.toByte(order)
+                || list.get(1) + list.get(4) + list.get(7) == 3 * State.toByte(order)
+                || list.get(2) + list.get(6) + list.get(8) == 3 * State.toByte(order);
 
     }
 
@@ -68,5 +71,10 @@ public class Field implements FieldInterface {
     @Override
     public void set(int index, State object) {
         list.set(index, object);
+    }
+
+    @Override
+    public int size() {
+        return list.size();
     }
 }

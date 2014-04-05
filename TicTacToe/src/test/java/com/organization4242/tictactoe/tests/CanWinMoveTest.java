@@ -1,6 +1,12 @@
 package com.organization4242.tictactoe.tests;
 
+import com.organization4242.tictactoe.ai.TicTacToeAI;
+import com.organization4242.tictactoe.model.Field;
+import com.organization4242.tictactoe.model.MainFieldModel;
+import com.organization4242.tictactoe.model.State;
 import org.junit.Test;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by Евгений on 03.04.2014.
@@ -8,6 +14,19 @@ import org.junit.Test;
 public class CanWinMoveTest {
     @Test
     public void canWinMoveTest() {
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
+        Field field = new Field(9);
+        field.add(State.X);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        assertEquals(2, ai.canWin(field, State.X));
+
 //        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
 //        List<List<Byte>> matrix = new ArrayList<List<Byte>>();
 //        byte[][] m = new byte[][]{{-1,0,0},{0,0,0},{0,0,0}};
