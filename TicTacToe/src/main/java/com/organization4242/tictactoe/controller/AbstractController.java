@@ -1,4 +1,4 @@
-package com.organization4242.tictactoe.app;
+package com.organization4242.tictactoe.controller;
 
 import com.organization4242.tictactoe.model.AbstractModel;
 import com.organization4242.tictactoe.view.AbstractView;

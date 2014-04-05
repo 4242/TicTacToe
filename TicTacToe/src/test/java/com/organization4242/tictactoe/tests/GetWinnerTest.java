@@ -1,6 +1,5 @@
 package com.organization4242.tictactoe.tests;
 
-import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.model.Field;
 import com.organization4242.tictactoe.model.State;
 import org.junit.Test;
@@ -8,54 +7,57 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 /**
- * Created by Евгений on 03.04.2014.
+ * Created by ilya on 06.04.14.
  */
-public class NextMoveTest {
+public class GetWinnerTest {
     @Test
-    public void nextMoveTestRow() {
-        TicTacToeAI ai = new TicTacToeAI();
+    public void testGetWinnerRow() throws Exception {
         Field field = new Field(9);
+
         field.add(State.X);
         field.add(State.X);
+        field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
-        field.add(State.EMPTY);
-        assertEquals(2, ai.nextMove(field, State.X));
+
+        assertEquals(field.getWinner(), State.X);
     }
 
     @Test
-    public void nextMoveTestColumn() {
-        TicTacToeAI ai = new TicTacToeAI();
+    public void testGetWinnerColumn() throws Exception {
         Field field = new Field(9);
+
         field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
+        field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
-        field.add(State.EMPTY);
-        assertEquals(6, ai.nextMove(field, State.X));
+
+        assertEquals(field.getWinner(), State.X);
     }
 
     @Test
-    public void nextMoveTestDiag() {
-        TicTacToeAI ai = new TicTacToeAI();
+    public void testGetWinnerDiag() throws Exception {
         Field field = new Field(9);
+
         field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
-        field.add(State.EMPTY);
+        field.add(State.X);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.EMPTY);
         field.add(State.X);
-        assertEquals(4, ai.nextMove(field, State.X));
+
+        assertEquals(field.getWinner(), State.X);
     }
 }
