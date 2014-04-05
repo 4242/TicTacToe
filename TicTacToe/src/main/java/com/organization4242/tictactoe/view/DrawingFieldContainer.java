@@ -8,29 +8,14 @@ import java.util.ArrayList;
 /**
  * Created by ilya on 04.04.14.
  */
-public class DrawingFieldContainer {
+public class DrawingFieldContainer extends DrawingField {
     private final Graphics g = AndroidGraphics.getInstance();
 
     private ArrayList<DrawingField> list;
 
-    private int width;
-    private int height;
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public DrawingFieldContainer(int capacity) {
-        list = new ArrayList<DrawingField>(capacity);
-    }
-
-    public DrawingFieldContainer(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public DrawingFieldContainer(int x, int y, int width, int height) {
+        super(x, y, width, height);
+        list = new ArrayList<DrawingField>(9);
     }
 
     public void add(DrawingField field) {
@@ -41,7 +26,11 @@ public class DrawingFieldContainer {
         return list.get(index);
     }
 
+    @Override
     public void draw() {
-
+        super.draw();
+        for (DrawingField field : list) {
+            field.draw();
+        }
     }
 }

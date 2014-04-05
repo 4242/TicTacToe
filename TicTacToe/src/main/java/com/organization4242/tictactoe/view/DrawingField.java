@@ -1,6 +1,5 @@
 package com.organization4242.tictactoe.view;
 
-import android.graphics.Color;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
 
@@ -12,7 +11,7 @@ public class DrawingField {//extends DrawingFieldContainer {
     private int y;
     private int width;
     private int height;
-    private int color = Color.RED;
+    private int color;
 
     private Graphics g = AndroidGraphics.getInstance();
 
@@ -45,7 +44,7 @@ public class DrawingField {//extends DrawingFieldContainer {
 
     public boolean contains(int i, int j) {
         return i >= x && i <= x + width
-                && j >= y && y <= y + height;
+                && j >= y && j <= y + height;
     }
 
     public void draw() {

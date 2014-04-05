@@ -14,7 +14,7 @@ public class Field implements FieldInterface {
 
     @Override
     public State getWinner() {
-        return null;
+        return State.X;
     }
 
     @Override

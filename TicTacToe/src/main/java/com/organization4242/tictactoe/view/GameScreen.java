@@ -1,7 +1,6 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
-import android.util.Log;
 import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
@@ -19,24 +18,27 @@ import java.util.List;
 public class GameScreen extends Screen {
     private static final int INSET = 10;
 
-    private DrawingFieldContainer mainField = new DrawingFieldContainer(MainFieldModel.NUMBER_OF_FIELDS);
-    private List<DrawingField> baseField = new ArrayList<DrawingField>();
-    private List<DrawingField> fields = new ArrayList<DrawingField>();
+    private List<DrawingFieldContainer> field = new ArrayList<DrawingFieldContainer>();
+
+    private byte[] coordinates;
 
     private Graphics g = AndroidGraphics.getInstance();
 
     public GameScreen() {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
-            int width = g.getWidth()/3;
-            int height = g.getWidth()/3;
-            baseField.add(new DrawingField((i / 3) * width, (i % 3) * height, width, height));
-            baseField.get(i).setColor(Color.WHITE);
-            for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
-                int internalWidth = width/3;
-                int internalHeight = height/3;
-                fields.add(new DrawingField(baseField.get(i).getX() + (j / 3) * internalWidth, baseField.get(i).getY() + (j % 3) * internalHeight,
-                        internalWidth, internalHeight));
+            int numberOfColumns = (int) Math.sqrt(MainFieldModel.NUMBER_OF_FIELDS);
+            int width = g.getWidth()/numberOfColumns;
 
+            //Adding 9 big fields, corresponding to baseField in MainFieldModel
+            field.add(new DrawingFieldContainer((i / numberOfColumns) * width, (i % numberOfColumns) * width, width, width));
+            field.get(i).setColor(Color.BLACK);
+
+            //Adding 9 internal fields to each field in base fields
+            for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
+                field.get(i).add(new DrawingField(field.get(i).getX() + (j / numberOfColumns) * width / numberOfColumns,
+                        field.get(i).getY() + (j % numberOfColumns) * width /numberOfColumns,
+                        width/numberOfColumns, width /numberOfColumns));
+                field.get(i).get(j).setColor(Color.WHITE);
             }
         }
         drawField();
@@ -44,14 +46,12 @@ public class GameScreen extends Screen {
 
     private void drawField() {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
-            baseField.get(i).draw();
-            for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
-                Log.d("----", String.valueOf(fields.get(i+j).getX()));
-                Log.d("----", String.valueOf(fields.get(i+j).getY()));
-                Log.d("----", "-----");
-                fields.get(i + j).draw();
-            }
+            field.get(i).draw();
         }
+    }
+
+    private void clear() {
+        g.clear(Color.BLACK);
     }
 
     @Override
@@ -59,12 +59,16 @@ public class GameScreen extends Screen {
         if (AndroidInput.getInstance().getTouchEvents().size() > 0) {
             int x = AndroidInput.getInstance().getTouchX(AndroidInput.TouchEvent.TOUCH_DOWN);
             int y = AndroidInput.getInstance().getTouchY(AndroidInput.TouchEvent.TOUCH_DOWN);
-            int baseFieldIndex;
-            for (int i = 0; i < baseField.size(); i++) {
-                DrawingField field = baseField.get(i);
-                if (field.contains(x, y)) {
-                    baseFieldIndex = i;
-                    Log.d("----", String.valueOf(baseFieldIndex));
+            for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
+                if (field.get(i).contains(x, y)) {
+                    for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
+                        if (field.get(i).get(j).contains(x, y)) {
+                            firePropertyChange(Controller.VIEW_UPDATED, coordinates,
+                                    new byte[]{(byte) i, (byte) j});
+                            coordinates = new byte[]{(byte) i, (byte) j};
+                            return;
+                        }
+                    }
                 }
             }
         }
@@ -72,7 +76,6 @@ public class GameScreen extends Screen {
 
     @Override
     public void present(float deltaTime) {
-        //drawField();
     }
 
     @Override
@@ -87,11 +90,19 @@ public class GameScreen extends Screen {
 
     @Override
     public void dispose() {
+        clear();
         firePropertyChange(Controller.DISPOSING, 0, 1);
     }
 
     @Override
     public void modelPropertyChange(PropertyChangeEvent pce) {
-        drawField();
+        byte[] value = (byte[]) pce.getNewValue();
+        field.get(value[0]).get(value[1]).setColor(FieldColor.fromByte(value[2]));
+        field.get(value[0]).get(value[1]).draw();
+        if (pce.getPropertyName().equals(Controller.LOCAL_WIN)
+                || pce.getPropertyName().equals(Controller.WIN)) {
+            field.get(value[0]).setColor(FieldColor.fromByte(value[2]));
+            field.get(value[0]).draw();
+        }
     }
 }

@@ -48,6 +48,7 @@ public final class MainFieldModel extends AbstractModel {
         baseField = new Field(NUMBER_OF_FIELDS);
         fields = new ArrayList<FieldInterface>(NUMBER_OF_FIELDS);
         for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+            baseField.add(State.EMPTY);
             fields.add(new Field(NUMBER_OF_FIELDS));
             for (int j = 0; j < NUMBER_OF_FIELDS; j++) {
                 fields.get(i).add(State.EMPTY);
@@ -56,13 +57,24 @@ public final class MainFieldModel extends AbstractModel {
     }
 
     public boolean canMove(byte i, byte j) {
-        return activeField == i
+        return (activeField == i || activeField == ANY)
                 && fields.get(i).get(j).equals(State.EMPTY);
     }
 
     private void makeMove(byte i, byte j) {
+        String propertyName = Controller.MODEL_UPDATED;
         fields.get(i).set(j, order);
-        firePropertyChange(Controller.MODEL_UPDATED, 0, 1);
+        State winner = fields.get(i).getWinner();
+        if (winner != State.EMPTY) {
+            baseField.set(i, winner);
+            propertyName = Controller.LOCAL_WIN;
+            if (baseField.getWinner() != State.EMPTY) {
+                propertyName = Controller.WIN;
+            }
+        }
+
+        firePropertyChange(propertyName, 0, new byte[] {i, j, State.toByte(order)});
+        order = State.reverse(order);
     }
 
     private void clear() {
@@ -73,7 +85,9 @@ public final class MainFieldModel extends AbstractModel {
     public void viewPropertyChange(PropertyChangeEvent pce) {
         if (pce.getPropertyName().equals(Controller.VIEW_UPDATED)) {
             byte[] coordinates = (byte[]) pce.getNewValue();
-            makeMove(coordinates[0], coordinates[1]);
+            if (canMove(coordinates[0], coordinates[1])) {
+                makeMove(coordinates[0], coordinates[1]);
+            }
         } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
             clear();
         }
