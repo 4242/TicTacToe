@@ -14,8 +14,6 @@ import java.util.Random;
  */
 public final class TicTacToeAI implements AI {
     public byte canWin (FieldInterface field, State order) {
-        byte move = 0;
-
         List<State> templateField = new ArrayList<State>();
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             templateField.add(field.get(i));
@@ -27,12 +25,10 @@ public final class TicTacToeAI implements AI {
             }
             inspectedField.set(index, order);
             if (inspectedField.getWinner() == order) {
-                move = index;
-                return move;
+                return index;
             }
         }
-
-        return move;
+        return 0;
     }
 
     public byte nextMove(FieldInterface field, State order) {
@@ -46,6 +42,6 @@ public final class TicTacToeAI implements AI {
 
         Random r = new Random();
         int randomPoint = r.nextInt(field.getEmptyFields().size());
-        return (byte) randomPoint;
+        return field.getEmptyFields().get(randomPoint);
     }
 }
