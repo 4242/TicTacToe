@@ -70,7 +70,7 @@ public final class MainFieldModel extends AbstractModel {
         State winner = fields.get(i).getWinner();
         activeField = j;
 
-        if (fields.get(i).getEmptyFields().length == 0) {
+        if (fields.get(i).getEmptyFields().size() == 0) {
             activeField = ANY;
         }
 

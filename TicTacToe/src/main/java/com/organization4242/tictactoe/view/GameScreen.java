@@ -98,13 +98,16 @@ public class GameScreen extends Screen {
     public void modelPropertyChange(PropertyChangeEvent pce) {
         MainFieldModelMessage message = (MainFieldModelMessage) pce.getNewValue();
         field.get(message.getI()).get(message.getJ()).setColor(FieldColor.fromState(message.getOrder()));
-        field.get(message.getI()).get(message.getJ()).draw();
+        field.get(message.getI()).setColor(Color.BLACK);
+        field.get(message.getI()).draw();
         if (pce.getPropertyName().equals(Controller.LOCAL_WIN)
                 || pce.getPropertyName().equals(Controller.WIN)) {
             field.get(message.getI()).setColor(FieldColor.fromState(message.getOrder()));
             field.get(message.getI()).draw();
         }
-        field.get(message.getActiveField()).setColor(Color.GREEN);
-        field.get(message.getActiveField()).draw();
+        if (message.getActiveField() != MainFieldModel.ANY) {
+            field.get(message.getActiveField()).setColor(Color.GREEN);
+            field.get(message.getActiveField()).draw();
+        }
     }
 }

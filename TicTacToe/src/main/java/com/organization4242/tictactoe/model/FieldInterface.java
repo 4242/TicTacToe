@@ -1,5 +1,7 @@
 package com.organization4242.tictactoe.model;
 
+import java.util.List;
+
 /**
  * Created by ilya on 04.04.14.
  */
@@ -11,5 +13,5 @@ public interface FieldInterface {
     State getWinner();
     boolean hasWinner();
 
-    byte[] getEmptyFields();
+    List<Byte> getEmptyFields();
 }

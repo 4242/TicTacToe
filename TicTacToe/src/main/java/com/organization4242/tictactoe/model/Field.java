@@ -1,6 +1,7 @@
 package com.organization4242.tictactoe.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ilya on 04.04.14.
@@ -43,8 +44,15 @@ public class Field implements FieldInterface {
     }
 
     @Override
-    public byte[] getEmptyFields() {
-        return new byte[1];
+    public List<Byte> getEmptyFields() {
+        List<Byte> emptyFields = new ArrayList<Byte>();
+        for (int i = 0; i < list.size(); i++) {
+            State state = list.get(i);
+            if (state == State.EMPTY) {
+                emptyFields.add((byte) i);
+            }
+        }
+        return emptyFields;
     }
 
     @Override
