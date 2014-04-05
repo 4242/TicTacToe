@@ -1,6 +1,7 @@
 package com.organization4242.tictactoe.model;
 
 import com.organization4242.tictactoe.controller.Controller;
+import com.organization4242.tictactoe.view.MainFieldModelMessage;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public final class MainFieldModel extends AbstractModel {
     private byte previousField;
     private FieldInterface baseField;
     private List<FieldInterface> fields;
+
+    private MainFieldModelMessage message;
 
     private static MainFieldModel instance = new MainFieldModel();
 
@@ -65,6 +68,12 @@ public final class MainFieldModel extends AbstractModel {
         String propertyName = Controller.MODEL_UPDATED;
         fields.get(i).set(j, order);
         State winner = fields.get(i).getWinner();
+        activeField = j;
+
+        if (fields.get(i).getEmptyFields().length == 0) {
+            activeField = ANY;
+        }
+
         if (winner != State.EMPTY) {
             baseField.set(i, winner);
             propertyName = Controller.LOCAL_WIN;
@@ -73,7 +82,8 @@ public final class MainFieldModel extends AbstractModel {
             }
         }
 
-        firePropertyChange(propertyName, 0, new byte[] {i, j, State.toByte(order)});
+        message = new MainFieldModelMessage(i, j, activeField, order);
+        firePropertyChange(propertyName, 0, message);
         order = State.reverse(order);
     }
 

@@ -24,7 +24,7 @@ public class Field implements FieldInterface {
 
     @Override
     public byte[] getEmptyFields() {
-        return new byte[0];
+        return new byte[1];
     }
 
     @Override
