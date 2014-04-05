@@ -7,17 +7,12 @@ import com.organization4242.tictactoe.model.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by ilya on 31.03.14.
  */
 public final class TicTacToeAI implements AI {
-    MainFieldModel state;
-
-    public TicTacToeAI(MainFieldModel state) {
-        this.state = state;
-    }
-
     public byte canWin (FieldInterface field, State order) {
         byte move = 0;
 
@@ -36,17 +31,21 @@ public final class TicTacToeAI implements AI {
                 return move;
             }
         }
+
         return move;
     }
 
-    public byte nextMove() {
-        byte activeField = state.getActiveField();
-        State order = state.getOrder();
+    public byte nextMove(FieldInterface field, State order) {
+        byte winningMove = canWin(field, order);
+        byte opponentWinningMove = canWin(field, State.reverse(order));
+        if (winningMove != 0) {
+            return winningMove;
+        } else if (opponentWinningMove != 0) {
+            return opponentWinningMove;
+        }
 
-//        Random r = new Random();
-//        int randomPoint = r.nextInt(state.freePoints().size());
-//        move = state.freePoints().get(randomPoint);
-//        return move;
-        return 0;
+        Random r = new Random();
+        int randomPoint = r.nextInt(field.getEmptyFields().size());
+        return (byte) randomPoint;
     }
 }

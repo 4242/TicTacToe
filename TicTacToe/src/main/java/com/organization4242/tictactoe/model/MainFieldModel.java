@@ -1,5 +1,7 @@
 package com.organization4242.tictactoe.model;
 
+import com.organization4242.tictactoe.ai.AI;
+import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.view.MainFieldModelMessage;
 
@@ -19,6 +21,8 @@ public final class MainFieldModel extends AbstractModel {
     private byte previousField;
     private FieldInterface baseField;
     private List<FieldInterface> fields;
+
+    AI ai = new TicTacToeAI();
 
     private MainFieldModelMessage message;
 
@@ -97,6 +101,7 @@ public final class MainFieldModel extends AbstractModel {
             byte[] coordinates = (byte[]) pce.getNewValue();
             if (canMove(coordinates[0], coordinates[1])) {
                 makeMove(coordinates[0], coordinates[1]);
+                makeMove(activeField, ai.nextMove(fields.get(activeField), order));
             }
         } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
             clear();
