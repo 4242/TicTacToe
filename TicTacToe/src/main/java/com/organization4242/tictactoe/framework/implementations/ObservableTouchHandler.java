@@ -11,7 +11,8 @@ import java.util.Observer;
  */
 public class ObservableTouchHandler extends SingleTouchHandler {
     private Observable o = new Observable();
-    private int[] coordinates;
+    private int[] downCoordinates;
+
     public ObservableTouchHandler(View view, float scaleX, float scaleY) {
         super(view, scaleX, scaleY);
     }
@@ -23,10 +24,13 @@ public class ObservableTouchHandler extends SingleTouchHandler {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         boolean b = super.onTouch(v, event);
-        int[] newCoordinates = new int[]{super.getTouchX(0), super.getTouchY(0)};
-        if (!Arrays.equals(coordinates, newCoordinates)) {
-            coordinates = newCoordinates;
-            o.send(coordinates);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            downCoordinates = new int[]{super.getTouchX(0), super.getTouchY(0)};
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            int[] upCoordinates = new int[]{super.getTouchX(0), super.getTouchY(0)};
+            if (Arrays.equals(upCoordinates, downCoordinates)) {
+                o.send(upCoordinates);
+            }
         }
         return b;
     }
