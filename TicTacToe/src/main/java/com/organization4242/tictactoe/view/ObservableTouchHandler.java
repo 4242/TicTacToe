@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.organization4242.tictactoe.framework.implementations.SingleTouchHandler;
 
+import java.util.Arrays;
 import java.util.Observer;
 
 /**
@@ -11,6 +12,7 @@ import java.util.Observer;
  */
 public class ObservableTouchHandler extends SingleTouchHandler {
     private Observable o = new Observable();
+    private int[] coordinates;
     public ObservableTouchHandler(View view, float scaleX, float scaleY) {
         super(view, scaleX, scaleY);
     }
@@ -22,7 +24,11 @@ public class ObservableTouchHandler extends SingleTouchHandler {
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         boolean b = super.onTouch(v, event);
-        o.send(new int[] {super.getTouchX(0), super.getTouchY(0)});
+        int[] newCoordinates = new int[]{super.getTouchX(0), super.getTouchY(0)};
+        if (!Arrays.equals(coordinates, newCoordinates)) {
+            coordinates = newCoordinates;
+            o.send(coordinates);
+        }
         return b;
     }
 
