@@ -11,7 +11,7 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Created by Евгений on 03.04.2014.
  */
-public class CanWinMoveTest {
+public class CanWinTest {
     @Test
     public void canWinMoveTestRow() {
         TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());

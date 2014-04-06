@@ -51,6 +51,26 @@ public final class MainFieldModel extends AbstractModel {
         return instance;
     }
 
+    public void setOrder(State order) {
+        this.order = order;
+    }
+
+    public void setActiveField(byte activeField) {
+        this.activeField = activeField;
+    }
+
+    public void setPreviousField(byte previousField) {
+        this.previousField = previousField;
+    }
+
+    public void setBaseField(FieldContainer baseField) {
+        this.baseField = baseField;
+    }
+
+    public void setFields(List<FieldInterface> fields) {
+        this.fields = fields;
+    }
+
     private MainFieldModel() {
         activeField = ANY;
         previousField = ANY;
