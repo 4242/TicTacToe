@@ -47,8 +47,8 @@ public final class TicTacToeAI implements AI {
     public byte nextMove() {
         Random r = new Random();
         if (state.getActiveField() == MainFieldModel.ANY) {
-            activeField = state.getBaseField().getEmptyFields()
-                    .get(r.nextInt(state.getBaseField().getEmptyFields().size()));
+            activeField = state.getBaseField().getAvailableFields()
+                    .get(r.nextInt(state.getBaseField().getAvailableFields().size()));
         } else {
             activeField = state.getActiveField();
         }

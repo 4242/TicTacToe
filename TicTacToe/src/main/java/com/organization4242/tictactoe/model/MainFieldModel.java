@@ -22,7 +22,7 @@ public final class MainFieldModel extends AbstractModel {
     private State order;
     private byte activeField;
     private byte previousField;
-    private FieldInterface baseField;
+    private FieldContainer baseField;
     private List<FieldInterface> fields;
 
     AI ai;
@@ -35,7 +35,7 @@ public final class MainFieldModel extends AbstractModel {
         return activeField;
     }
 
-    public FieldInterface getBaseField() {
+    public FieldContainer getBaseField() {
         return baseField;
     }
 
@@ -55,7 +55,7 @@ public final class MainFieldModel extends AbstractModel {
         activeField = ANY;
         previousField = ANY;
         order = State.X;
-        baseField = new Field(NUMBER_OF_FIELDS);
+        baseField = new FieldContainer(NUMBER_OF_FIELDS);
         fields = new ArrayList<FieldInterface>(NUMBER_OF_FIELDS);
         for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
             baseField.add(State.EMPTY);
@@ -63,6 +63,7 @@ public final class MainFieldModel extends AbstractModel {
             for (int j = 0; j < NUMBER_OF_FIELDS; j++) {
                 fields.get(i).add(State.EMPTY);
             }
+            baseField.add(fields.get(i));
         }
         ai = new TicTacToeAI(this);
     }
