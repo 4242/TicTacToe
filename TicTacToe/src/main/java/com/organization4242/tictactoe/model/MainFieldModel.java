@@ -4,11 +4,12 @@ import android.util.Log;
 import com.organization4242.tictactoe.ai.AI;
 import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.controller.Controller;
-import com.organization4242.tictactoe.view.MainFieldModelMessage;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ilya on 31.03.14.
@@ -21,13 +22,11 @@ public final class MainFieldModel extends AbstractModel {
 
     private State order;
     private byte activeField;
-    private byte previousField;
+    private Map<State, Byte> previousFields;
     private FieldContainer baseField;
     private List<FieldInterface> fields;
 
-    AI ai;
-
-    private MainFieldModelMessage message;
+    private AI ai;
 
     private static MainFieldModel instance = new MainFieldModel();
 
@@ -59,10 +58,6 @@ public final class MainFieldModel extends AbstractModel {
         this.activeField = activeField;
     }
 
-    public void setPreviousField(byte previousField) {
-        this.previousField = previousField;
-    }
-
     public void setBaseField(FieldContainer baseField) {
         this.baseField = baseField;
     }
@@ -73,7 +68,9 @@ public final class MainFieldModel extends AbstractModel {
 
     private MainFieldModel() {
         activeField = ANY;
-        previousField = ANY;
+        previousFields = new HashMap<State, Byte>();
+        previousFields.put(State.X, ANY);
+        previousFields.put(State.O, ANY);
         order = State.X;
         baseField = new FieldContainer(NUMBER_OF_FIELDS);
         fields = new ArrayList<FieldInterface>(NUMBER_OF_FIELDS);
@@ -88,9 +85,10 @@ public final class MainFieldModel extends AbstractModel {
         ai = new TicTacToeAI(this);
     }
 
-    public boolean canMove(byte i, byte j) {
+    public boolean canMove(byte i, byte j, State order) {
         return (activeField == i || activeField == ANY)
-                && fields.get(i).get(j).equals(State.EMPTY);
+                && fields.get(i).get(j).equals(State.EMPTY)
+                && j != previousFields.get(order);
     }
 
     private void makeMove(byte i, byte j) {
@@ -113,8 +111,10 @@ public final class MainFieldModel extends AbstractModel {
             }
         }
 
-        message = new MainFieldModelMessage(i, j, activeField, order);
+        MainFieldModelMessage message =
+                new MainFieldModelMessage(i, j, activeField, previousFields.get(order), order);
         firePropertyChange(propertyName, 0, message);
+        previousFields.put(order, j);
         order = State.reverse(order);
     }
 
@@ -126,10 +126,10 @@ public final class MainFieldModel extends AbstractModel {
     public void viewPropertyChange(PropertyChangeEvent pce) {
         if (pce.getPropertyName().equals(Controller.VIEW_UPDATED)) {
             byte[] coordinates = (byte[]) pce.getNewValue();
-            if (canMove(coordinates[0], coordinates[1])) {
+            if (canMove(coordinates[0], coordinates[1], order)) {
                 makeMove(coordinates[0], coordinates[1]);
-                byte move = ai.nextMove();
-                makeMove(ai.getActiveField(), move);
+                //byte move = ai.nextMove();
+                //makeMove(ai.getActiveField(), move);
             }
         } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
             clear();

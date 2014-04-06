@@ -7,6 +7,7 @@ import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
 import com.organization4242.tictactoe.model.MainFieldModel;
+import com.organization4242.tictactoe.model.MainFieldModelMessage;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
