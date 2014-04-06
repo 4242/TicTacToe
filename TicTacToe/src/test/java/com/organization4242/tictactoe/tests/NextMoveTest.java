@@ -58,4 +58,36 @@ public class NextMoveTest {
         field.add(State.X);
         assertEquals(4, ai.nextMove(field, State.X));
     }
+
+    @Test
+    public void nextMoveTestDiag2() {
+        TicTacToeAI ai = new TicTacToeAI();
+        Field field = new Field(9);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        assertEquals(8, ai.nextMove(field, State.X));
+    }
+
+    @Test
+    public void nextMoveTestDiag3() {
+        TicTacToeAI ai = new TicTacToeAI();
+        Field field = new Field(9);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        assertEquals(0, ai.nextMove(field, State.X));
+    }
 }

@@ -13,11 +13,13 @@ import java.util.Random;
  * Created by ilya on 31.03.14.
  */
 public final class TicTacToeAI implements AI {
+    private static final byte NONE = 10;
     public byte canWin (FieldInterface field, State order) {
         List<State> templateField = new ArrayList<State>();
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             templateField.add(field.get(i));
         }
+        List<Byte> e = field.getEmptyFields();
         for (Byte index : field.getEmptyFields()) {
             FieldInterface inspectedField = new Field(MainFieldModel.NUMBER_OF_FIELDS);
             for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
@@ -28,15 +30,15 @@ public final class TicTacToeAI implements AI {
                 return index;
             }
         }
-        return 0;
+        return NONE;
     }
 
     public byte nextMove(FieldInterface field, State order) {
         byte winningMove = canWin(field, order);
         byte opponentWinningMove = canWin(field, State.reverse(order));
-        if (winningMove != 0) {
+        if (winningMove != NONE) {
             return winningMove;
-        } else if (opponentWinningMove != 0) {
+        } else if (opponentWinningMove != NONE) {
             return opponentWinningMove;
         }
 

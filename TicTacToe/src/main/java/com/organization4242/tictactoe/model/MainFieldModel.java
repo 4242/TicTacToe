@@ -1,5 +1,6 @@
 package com.organization4242.tictactoe.model;
 
+import android.util.Log;
 import com.organization4242.tictactoe.ai.AI;
 import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.controller.Controller;
@@ -15,6 +16,8 @@ import java.util.List;
 public final class MainFieldModel extends AbstractModel {
     public static final int NUMBER_OF_FIELDS = 9;
     public static final Byte ANY = 10;
+
+    private static final String TAG = "Main Window Model: ";
 
     private State order;
     private byte activeField;
@@ -68,7 +71,20 @@ public final class MainFieldModel extends AbstractModel {
                 && fields.get(i).get(j).equals(State.EMPTY);
     }
 
+    private void print() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
+            for (int j = 0; j < NUMBER_OF_FIELDS; j++) {
+                builder.append(String.format("%3d", State.toByte(fields.get(i).get(j)))).append(" ");
+            }
+            builder.append('\n');
+        }
+        Log.d(TAG, String.format("\n Fields: \n %s \n ActiveField: %s \n Order: %s", builder, activeField, order));
+    }
+
     private void makeMove(byte i, byte j) {
+        Log.d(TAG, String.format("Making move to %d, %d", i, j));
+
         String propertyName = Controller.MODEL_UPDATED;
         fields.get(i).set(j, order);
         State winner = fields.get(i).getWinner();
@@ -89,6 +105,7 @@ public final class MainFieldModel extends AbstractModel {
         message = new MainFieldModelMessage(i, j, activeField, order);
         firePropertyChange(propertyName, 0, message);
         order = State.reverse(order);
+        print();
     }
 
     private void clear() {

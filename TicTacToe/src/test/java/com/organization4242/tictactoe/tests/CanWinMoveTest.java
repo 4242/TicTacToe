@@ -58,4 +58,38 @@ public class CanWinMoveTest {
         field.add(State.X);
         assertEquals(4, ai.canWin(field, State.X));
     }
+
+    @Test
+    public void canWinMoveTestMixed() {
+        TicTacToeAI ai = new TicTacToeAI();
+        Field field = new Field(9);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.O);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.O);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        assertEquals(4, ai.canWin(field, State.X));
+        assertEquals(4, ai.canWin(field, State.O));
+    }
+
+    @Test
+    public void canWinMoveTestMixed2() {
+        TicTacToeAI ai = new TicTacToeAI();
+        Field field = new Field(9);
+        field.add(State.O);
+        field.add(State.O);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        assertEquals(2, ai.canWin(field, State.X));
+        assertEquals(2, ai.canWin(field, State.O));
+    }
 }

@@ -1,6 +1,7 @@
 package com.organization4242.tictactoe.view;
 
 import android.graphics.Color;
+import android.util.Log;
 import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class GameScreen extends Screen {
     private static final int INSET = 10;
+    private static final String TAG = "Game screen: ";
 
     private List<DrawingFieldContainer> field = new ArrayList<DrawingFieldContainer>();
 
@@ -63,6 +65,7 @@ public class GameScreen extends Screen {
                 if (field.get(i).contains(x, y)) {
                     for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
                         if (field.get(i).get(j).contains(x, y)) {
+                            Log.d(TAG, String.format("View changed event, coordinates: %d, %d", i, j));
                             firePropertyChange(Controller.VIEW_UPDATED, coordinates,
                                     new byte[]{(byte) i, (byte) j});
                             coordinates = new byte[]{(byte) i, (byte) j};

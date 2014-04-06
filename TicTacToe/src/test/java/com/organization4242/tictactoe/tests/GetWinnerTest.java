@@ -24,7 +24,7 @@ public class GetWinnerTest {
         field.add(State.EMPTY);
         field.add(State.EMPTY);
 
-        assertEquals(field.getWinner(), State.X);
+        assertEquals(State.X, field.getWinner());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GetWinnerTest {
         field.add(State.EMPTY);
         field.add(State.EMPTY);
 
-        assertEquals(field.getWinner(), State.X);
+        assertEquals(State.X, field.getWinner());
     }
 
     @Test
@@ -58,6 +58,54 @@ public class GetWinnerTest {
         field.add(State.EMPTY);
         field.add(State.X);
 
-        assertEquals(field.getWinner(), State.X);
+        assertEquals(State.X, field.getWinner());
+
+        field = new Field(9);
+
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+
+        assertEquals(State.X, field.getWinner());
+    }
+
+    @Test
+    public void testGetWinnerMixed() throws Exception {
+        Field field = new Field(9);
+
+        field.add(State.O);
+        field.add(State.O);
+        field.add(State.O);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+
+        assertEquals(State.O, field.getWinner());
+    }
+
+    @Test
+    public void testGetWinnerMixed2() throws Exception {
+        Field field = new Field(9);
+
+        field.add(State.O);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.X);
+        field.add(State.EMPTY);
+        field.add(State.EMPTY);
+        field.add(State.X);
+
+        assertEquals(State.X, field.getWinner());
     }
 }
