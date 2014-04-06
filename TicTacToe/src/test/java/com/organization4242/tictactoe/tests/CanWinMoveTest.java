@@ -2,6 +2,7 @@ package com.organization4242.tictactoe.tests;
 
 import com.organization4242.tictactoe.ai.TicTacToeAI;
 import com.organization4242.tictactoe.model.Field;
+import com.organization4242.tictactoe.model.MainFieldModel;
 import com.organization4242.tictactoe.model.State;
 import org.junit.Test;
 
@@ -13,7 +14,7 @@ import static junit.framework.Assert.assertEquals;
 public class CanWinMoveTest {
     @Test
     public void canWinMoveTestRow() {
-        TicTacToeAI ai = new TicTacToeAI();
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
         Field field = new Field(9);
         field.add(State.X);
         field.add(State.X);
@@ -29,7 +30,7 @@ public class CanWinMoveTest {
 
     @Test
     public void canWinMoveTestColumn() {
-        TicTacToeAI ai = new TicTacToeAI();
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
         Field field = new Field(9);
         field.add(State.X);
         field.add(State.EMPTY);
@@ -45,7 +46,7 @@ public class CanWinMoveTest {
 
     @Test
     public void canWinMoveTestDiag() {
-        TicTacToeAI ai = new TicTacToeAI();
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
         Field field = new Field(9);
         field.add(State.X);
         field.add(State.EMPTY);
@@ -61,7 +62,7 @@ public class CanWinMoveTest {
 
     @Test
     public void canWinMoveTestMixed() {
-        TicTacToeAI ai = new TicTacToeAI();
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
         Field field = new Field(9);
         field.add(State.X);
         field.add(State.EMPTY);
@@ -78,7 +79,7 @@ public class CanWinMoveTest {
 
     @Test
     public void canWinMoveTestMixed2() {
-        TicTacToeAI ai = new TicTacToeAI();
+        TicTacToeAI ai = new TicTacToeAI(MainFieldModel.getInstance());
         Field field = new Field(9);
         field.add(State.O);
         field.add(State.O);
