@@ -30,7 +30,9 @@ public class GameScreen extends Screen {
     public GameScreen() {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             int numberOfColumns = (int) Math.sqrt(MainFieldModel.NUMBER_OF_FIELDS);
-            int width = g.getWidth()/numberOfColumns;
+            int width = g.getWidth() < g.getHeight()
+                    ? g.getWidth()/numberOfColumns
+                    : g.getHeight()/numberOfColumns;
 
             //Adding 9 big fields, corresponding to baseField in MainFieldModel
             field.add(new DrawingFieldContainer((i % numberOfColumns) * width, (i / numberOfColumns) * width, width, width));
