@@ -1,8 +1,7 @@
-package com.organization4242.tictactoe.view;
+package com.organization4242.tictactoe.framework.implementations;
 
 import android.view.MotionEvent;
 import android.view.View;
-import com.organization4242.tictactoe.framework.implementations.SingleTouchHandler;
 
 import java.util.Arrays;
 import java.util.Observer;

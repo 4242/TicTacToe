@@ -13,7 +13,6 @@ import android.os.PowerManager;
 import android.util.Log;
 import com.organization4242.tictactoe.framework.Game;
 import com.organization4242.tictactoe.framework.Screen;
-import com.organization4242.tictactoe.view.ObservableTouchHandler;
 
 public class AndroidGame extends Activity implements Game {
     private final static String TAG = "***Android Game*** : ";
