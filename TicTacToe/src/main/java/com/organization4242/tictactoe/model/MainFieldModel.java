@@ -25,7 +25,7 @@ public final class MainFieldModel extends AbstractModel {
     private FieldInterface baseField;
     private List<FieldInterface> fields;
 
-    AI ai = new TicTacToeAI();
+    AI ai;
 
     private MainFieldModelMessage message;
 
@@ -64,22 +64,12 @@ public final class MainFieldModel extends AbstractModel {
                 fields.get(i).add(State.EMPTY);
             }
         }
+        ai = new TicTacToeAI(this);
     }
 
     public boolean canMove(byte i, byte j) {
         return (activeField == i || activeField == ANY)
                 && fields.get(i).get(j).equals(State.EMPTY);
-    }
-
-    private void print() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < NUMBER_OF_FIELDS; i++) {
-            for (int j = 0; j < NUMBER_OF_FIELDS; j++) {
-                builder.append(String.format("%3d", State.toByte(fields.get(i).get(j)))).append(" ");
-            }
-            builder.append('\n');
-        }
-        Log.d(TAG, String.format("\n Fields: \n %s \n ActiveField: %s \n Order: %s", builder, activeField, order));
     }
 
     private void makeMove(byte i, byte j) {
@@ -90,7 +80,7 @@ public final class MainFieldModel extends AbstractModel {
         State winner = fields.get(i).getWinner();
         activeField = j;
 
-        if (fields.get(i).getEmptyFields().size() == 0) {
+        if (fields.get(j).getEmptyFields().size() == 0) {
             activeField = ANY;
         }
 
@@ -105,7 +95,6 @@ public final class MainFieldModel extends AbstractModel {
         message = new MainFieldModelMessage(i, j, activeField, order);
         firePropertyChange(propertyName, 0, message);
         order = State.reverse(order);
-        print();
     }
 
     private void clear() {
@@ -118,7 +107,8 @@ public final class MainFieldModel extends AbstractModel {
             byte[] coordinates = (byte[]) pce.getNewValue();
             if (canMove(coordinates[0], coordinates[1])) {
                 makeMove(coordinates[0], coordinates[1]);
-                makeMove(activeField, ai.nextMove(fields.get(activeField), order));
+                byte move = ai.nextMove();
+                makeMove(ai.getActiveField(), move);
             }
         } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
             clear();

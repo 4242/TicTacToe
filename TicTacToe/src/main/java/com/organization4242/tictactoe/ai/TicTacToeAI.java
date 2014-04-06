@@ -14,6 +14,18 @@ import java.util.Random;
  */
 public final class TicTacToeAI implements AI {
     private static final byte NONE = 10;
+
+    private MainFieldModel state;
+    private byte activeField;
+
+    public byte getActiveField() {
+        return activeField;
+    }
+
+    public TicTacToeAI(MainFieldModel state) {
+        this.state = state;
+    }
+
     public byte canWin (FieldInterface field, State order) {
         List<State> templateField = new ArrayList<State>();
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
@@ -32,7 +44,18 @@ public final class TicTacToeAI implements AI {
         return NONE;
     }
 
-    public byte nextMove(FieldInterface field, State order) {
+    public byte nextMove() {
+        Random r = new Random();
+        if (state.getActiveField() == MainFieldModel.ANY) {
+            activeField = state.getBaseField().getEmptyFields()
+                    .get(r.nextInt(state.getBaseField().getEmptyFields().size()));
+        } else {
+            activeField = state.getActiveField();
+        }
+
+        FieldInterface field = state.getFields().get(activeField);
+        State order = state.getOrder();
+
         byte winningMove = canWin(field, order);
         byte opponentWinningMove = canWin(field, State.reverse(order));
         if (winningMove != NONE) {
@@ -41,7 +64,6 @@ public final class TicTacToeAI implements AI {
             return opponentWinningMove;
         }
 
-        Random r = new Random();
         int randomPoint = r.nextInt(field.getEmptyFields().size());
         return field.getEmptyFields().get(randomPoint);
     }
