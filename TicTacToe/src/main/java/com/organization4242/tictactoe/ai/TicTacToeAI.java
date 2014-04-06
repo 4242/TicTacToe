@@ -19,7 +19,6 @@ public final class TicTacToeAI implements AI {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             templateField.add(field.get(i));
         }
-        List<Byte> e = field.getEmptyFields();
         for (Byte index : field.getEmptyFields()) {
             FieldInterface inspectedField = new Field(MainFieldModel.NUMBER_OF_FIELDS);
             for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {

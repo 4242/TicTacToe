@@ -13,6 +13,7 @@ import android.os.PowerManager;
 import android.util.Log;
 import com.organization4242.tictactoe.framework.Game;
 import com.organization4242.tictactoe.framework.Screen;
+import com.organization4242.tictactoe.view.ObservableTouchHandler;
 
 public class AndroidGame extends Activity implements Game {
     private final static String TAG = "***Android Game*** : ";
@@ -54,15 +55,16 @@ public class AndroidGame extends Activity implements Game {
 
         AndroidAudio.getInstance().setSoundPool(new SoundPool(20, AudioManager.STREAM_MUSIC, 0));
 
-        AndroidInput.getInstance().setAccelHandler(new AccelerometerHandler(this));
-        AndroidInput.getInstance().setKeyHandler(new KeyboardHandler(renderView));
-        AndroidInput.getInstance().setTouchHandler(new MultiTouchHandler(renderView, scaleX, scaleY));
+        //AndroidInput.getInstance().setAccelHandler(new AccelerometerHandler(this));
+        //AndroidInput.getInstance().setKeyHandler(new KeyboardHandler(renderView));
+        //AndroidInput.getInstance().setTouchHandler(new ObservableTouchHandler(renderView, scaleX, scaleY));
 
         AndroidFileIO.getInstance().setAssets(getAssets());
 
         screen = getStartScreen();
         setContentView(renderView);
-        //renderView.setOnTouchListener(screen);
+        ObservableTouchHandler handler = new ObservableTouchHandler(renderView, scaleX, scaleY);
+        handler.addObserver(screen);
 
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "GLGame");

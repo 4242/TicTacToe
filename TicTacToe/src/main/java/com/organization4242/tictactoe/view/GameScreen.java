@@ -6,12 +6,12 @@ import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.framework.Graphics;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
-import com.organization4242.tictactoe.framework.implementations.AndroidInput;
 import com.organization4242.tictactoe.model.MainFieldModel;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by ilya on 30.03.14.
@@ -58,23 +58,6 @@ public class GameScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        if (AndroidInput.getInstance().getTouchEvents().size() > 0) {
-            int x = AndroidInput.getInstance().getTouchX(AndroidInput.TouchEvent.TOUCH_DOWN);
-            int y = AndroidInput.getInstance().getTouchY(AndroidInput.TouchEvent.TOUCH_DOWN);
-            for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
-                if (field.get(i).contains(x, y)) {
-                    for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
-                        if (field.get(i).get(j).contains(x, y)) {
-                            Log.d(TAG, String.format("View changed event, coordinates: %d, %d", i, j));
-                            firePropertyChange(Controller.VIEW_UPDATED, coordinates,
-                                    new byte[]{(byte) i, (byte) j});
-                            coordinates = new byte[]{(byte) i, (byte) j};
-                            return;
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -103,14 +86,33 @@ public class GameScreen extends Screen {
         field.get(message.getI()).get(message.getJ()).setColor(FieldColor.fromState(message.getOrder()));
         field.get(message.getI()).setColor(Color.BLACK);
         field.get(message.getI()).draw();
-        if (pce.getPropertyName().equals(Controller.LOCAL_WIN)
-                || pce.getPropertyName().equals(Controller.WIN)) {
+        if (pce.getPropertyName().equals(Controller.LOCAL_WIN)) {
             field.get(message.getI()).setColor(FieldColor.fromState(message.getOrder()));
             field.get(message.getI()).draw();
         }
         if (message.getActiveField() != MainFieldModel.ANY) {
             field.get(message.getActiveField()).setColor(Color.GREEN);
             field.get(message.getActiveField()).draw();
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        int[] c = (int[]) o;
+        int x = c[0];
+        int y = c[1];
+        for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
+            if (field.get(i).contains(x, y)) {
+                for (int j = 0; j < MainFieldModel.NUMBER_OF_FIELDS; j++) {
+                    if (field.get(i).get(j).contains(x, y)) {
+                        Log.d(TAG, String.format("View changed event, coordinates: %d, %d", i, j));
+                        firePropertyChange(Controller.VIEW_UPDATED, coordinates,
+                                new byte[]{(byte) i, (byte) j});
+                        coordinates = new byte[]{(byte) i, (byte) j};
+                        return;
+                    }
+                }
+            }
         }
     }
 }

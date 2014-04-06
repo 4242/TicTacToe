@@ -1,9 +1,10 @@
 package com.organization4242.tictactoe.framework;
 
-import android.view.View;
 import com.organization4242.tictactoe.view.AbstractView;
 
-public abstract class Screen extends AbstractView {
+import java.util.Observer;
+
+public abstract class Screen extends AbstractView implements Observer {
     public abstract void update(float deltaTime);
 
     public abstract void present(float deltaTime);
