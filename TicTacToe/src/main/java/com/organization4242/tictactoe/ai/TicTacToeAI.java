@@ -38,7 +38,7 @@ public final class TicTacToeAI implements AI {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             templateField.add(field.get(i));
         }
-        for (Byte index : field.getEmptyFields()) {
+        for (Byte index : field.getEmptyPoints()) {
             FieldInterface inspectedField = new Field(MainFieldModel.NUMBER_OF_FIELDS);
             for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
                 inspectedField.add(templateField.get(i));
@@ -78,7 +78,7 @@ public final class TicTacToeAI implements AI {
             return opponentWinningMove;
         }
 
-        if (field.getEmptyFields().size() == 1) return field.getEmptyFields().get(0);
+        if (field.getEmptyPoints().size() == 1) return field.getEmptyPoints().get(0);
 
         return getAvailablePoints().get(r.nextInt(getAvailablePoints().size()));
     }

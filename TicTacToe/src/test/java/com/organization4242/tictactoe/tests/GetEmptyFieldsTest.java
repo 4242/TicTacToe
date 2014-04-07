@@ -33,7 +33,7 @@ public class GetEmptyFieldsTest {
         expected.add((byte) 6);
         expected.add((byte) 7);
 
-        assertEquals(expected, field.getEmptyFields());
+        assertEquals(expected, field.getEmptyPoints());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class GetEmptyFieldsTest {
         expected.add((byte) 6);
         expected.add((byte) 7);
 
-        assertEquals(expected, field.getEmptyFields());
+        assertEquals(expected, field.getEmptyPoints());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class GetEmptyFieldsTest {
         expected.add((byte) 7);
         expected.add((byte) 8);
 
-        assertEquals(expected, field.getEmptyFields());
+        assertEquals(expected, field.getEmptyPoints());
     }
 
     @Test
@@ -106,6 +106,6 @@ public class GetEmptyFieldsTest {
 
         ArrayList<Byte> expected = new ArrayList<Byte>();
 
-        assertEquals(expected, field.getEmptyFields());
+        assertEquals(expected, field.getEmptyPoints());
     }
 }

@@ -26,7 +26,7 @@ public class FieldContainer extends Field {
         List<Byte> emptyFields = new ArrayList<Byte>();
         for (int i = 0; i < list.size(); i++) {
             FieldInterface f = list.get(i);
-            if (f.getEmptyFields().size() > 0) {
+            if (f.getEmptyPoints().size() > 0) {
                 emptyFields.add((byte) i);
             }
         }

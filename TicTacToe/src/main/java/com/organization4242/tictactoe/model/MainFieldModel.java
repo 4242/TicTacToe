@@ -89,7 +89,7 @@ public final class MainFieldModel extends AbstractModel {
         return (activeField == i || activeField == ANY)
                 && fields.get(i).get(j).equals(State.EMPTY)
                 && (j != previousFields.get(order)
-                    || fields.get(i).getEmptyFields().size() == 1);
+                    || fields.get(i).getEmptyPoints().size() == 1);
     }
 
     private void makeMove(byte i, byte j) {
@@ -100,7 +100,7 @@ public final class MainFieldModel extends AbstractModel {
         State winner = fields.get(i).getWinner();
         activeField = j;
 
-        if (fields.get(j).getEmptyFields().size() == 0) {
+        if (fields.get(j).getEmptyPoints().size() == 0) {
             activeField = ANY;
         }
 

@@ -15,5 +15,5 @@ public interface FieldInterface {
     State getWinner();
     boolean hasWinner();
 
-    List<Byte> getEmptyFields();
+    List<Byte> getEmptyPoints();
 }
