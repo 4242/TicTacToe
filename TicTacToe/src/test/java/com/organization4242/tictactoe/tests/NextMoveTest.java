@@ -18,9 +18,9 @@ public class NextMoveTest {
 
     @Before
     public void setUp() throws Exception {
-        ai = new TicTacToeAI(MainFieldModel.getInstance());
         MainFieldModel.getInstance().setActiveField((byte) 0);
         MainFieldModel.getInstance().setOrder(State.X);
+        ai = new TicTacToeAI(MainFieldModel.getInstance());
     }
 
     @Test

@@ -78,7 +78,9 @@ public final class TicTacToeAI implements AI {
             return opponentWinningMove;
         }
 
-        if (field.getEmptyPoints().size() == 1) return field.getEmptyPoints().get(0);
+        if (field.getEmptyPoints().size() == 1) {
+            return field.getEmptyPoints().get(0);
+        }
 
         List<Byte> availablePoints = getAvailablePoints();
         return availablePoints.get(r.nextInt(availablePoints.size()));
