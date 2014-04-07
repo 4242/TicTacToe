@@ -44,6 +44,18 @@ public final class TicTacToeAI implements AI {
         return NONE;
     }
 
+    public List<Byte> getAvailablePoints() {
+        List<Byte> emptyFields = new ArrayList<Byte>();
+        State order = state.getOrder();
+        FieldInterface currentField = state.getFields().get(activeField);
+        for (int i = 0; i < currentField.size(); i++) {
+            if (currentField.get(i) == State.EMPTY && state.canMove(state.getActiveField(), (byte) i, order)) {
+                emptyFields.add((byte) i);
+            }
+        }
+        return emptyFields;
+    }
+
     public byte nextMove() {
         Random r = new Random();
         if (state.getActiveField() == MainFieldModel.ANY) {
@@ -58,13 +70,16 @@ public final class TicTacToeAI implements AI {
 
         byte winningMove = canWin(field, order);
         byte opponentWinningMove = canWin(field, State.reverse(order));
-        if (winningMove != NONE) {
+        if (winningMove != NONE && state.canMove(state.getActiveField(), winningMove, order)) {
             return winningMove;
-        } else if (opponentWinningMove != NONE) {
+        } else if (opponentWinningMove != NONE && state.canMove(state.getActiveField(), opponentWinningMove, order)) {
             return opponentWinningMove;
         }
 
-        int randomPoint = r.nextInt(field.getEmptyFields().size());
-        return field.getEmptyFields().get(randomPoint);
+        if (field.getEmptyFields().size() == 1) return field.getEmptyFields().get(0);
+
+        int randomPointAddress = r.nextInt(field.getEmptyFields().size());
+        byte randomPoint = field.getEmptyFields().get(randomPointAddress);
+        return randomPoint;
     }
 }

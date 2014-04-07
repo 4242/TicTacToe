@@ -129,8 +129,8 @@ public final class MainFieldModel extends AbstractModel {
             byte[] coordinates = (byte[]) pce.getNewValue();
             if (canMove(coordinates[0], coordinates[1], order)) {
                 makeMove(coordinates[0], coordinates[1]);
-                //byte move = ai.nextMove();
-                //makeMove(ai.getActiveField(), move);
+                byte move = ai.nextMove();
+                makeMove(ai.getActiveField(), move);
             }
         } else if (pce.getPropertyName().equals(Controller.DISPOSING)) {
             clear();
