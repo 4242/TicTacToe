@@ -48,14 +48,14 @@ public class Field implements FieldInterface {
 
     @Override
     public List<Byte> getEmptyPoints() {
-        List<Byte> emptyFields = new ArrayList<Byte>();
+        List<Byte> emptyPoints = new ArrayList<Byte>();
         for (int i = 0; i < list.size(); i++) {
             State state = list.get(i);
             if (state == State.EMPTY) {
-                emptyFields.add((byte) i);
+                emptyPoints.add((byte) i);
             }
         }
-        return emptyFields;
+        return emptyPoints;
     }
 
     @Override
