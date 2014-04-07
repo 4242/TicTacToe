@@ -19,6 +19,13 @@ public final class TicTacToeAI implements AI {
     private byte activeField;
 
     public byte getActiveField() {
+        Random r = new Random();
+        if (state.getActiveField() == MainFieldModel.ANY) {
+            activeField = state.getBaseField().getAvailableFields()
+                    .get(r.nextInt(state.getBaseField().getAvailableFields().size()));
+        } else {
+            activeField = state.getActiveField();
+        }
         return activeField;
     }
 
@@ -47,9 +54,10 @@ public final class TicTacToeAI implements AI {
     public List<Byte> getAvailablePoints() {
         List<Byte> emptyFields = new ArrayList<Byte>();
         State order = state.getOrder();
+        activeField = getActiveField();
         FieldInterface currentField = state.getFields().get(activeField);
         for (int i = 0; i < currentField.size(); i++) {
-            if (currentField.get(i) == State.EMPTY && state.canMove(state.getActiveField(), (byte) i, order)) {
+            if (currentField.get(i) == State.EMPTY && state.canMove(activeField, (byte) i, order)) {
                 emptyFields.add((byte) i);
             }
         }
@@ -58,28 +66,20 @@ public final class TicTacToeAI implements AI {
 
     public byte nextMove() {
         Random r = new Random();
-        if (state.getActiveField() == MainFieldModel.ANY) {
-            activeField = state.getBaseField().getAvailableFields()
-                    .get(r.nextInt(state.getBaseField().getAvailableFields().size()));
-        } else {
-            activeField = state.getActiveField();
-        }
-
+        activeField = getActiveField();
         FieldInterface field = state.getFields().get(activeField);
         State order = state.getOrder();
 
         byte winningMove = canWin(field, order);
         byte opponentWinningMove = canWin(field, State.reverse(order));
-        if (winningMove != NONE && state.canMove(state.getActiveField(), winningMove, order)) {
+        if (winningMove != NONE && state.canMove(activeField, winningMove, order)) {
             return winningMove;
-        } else if (opponentWinningMove != NONE && state.canMove(state.getActiveField(), opponentWinningMove, order)) {
+        } else if (opponentWinningMove != NONE && state.canMove(activeField, opponentWinningMove, order)) {
             return opponentWinningMove;
         }
 
         if (field.getEmptyFields().size() == 1) return field.getEmptyFields().get(0);
 
-        int randomPointAddress = r.nextInt(field.getEmptyFields().size());
-        byte randomPoint = field.getEmptyFields().get(randomPointAddress);
-        return randomPoint;
+        return getAvailablePoints().get(r.nextInt(getAvailablePoints().size()));
     }
 }
