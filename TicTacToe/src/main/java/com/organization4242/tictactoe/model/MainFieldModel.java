@@ -88,7 +88,8 @@ public final class MainFieldModel extends AbstractModel {
     public boolean canMove(byte i, byte j, State order) {
         return (activeField == i || activeField == ANY)
                 && fields.get(i).get(j).equals(State.EMPTY)
-                && j != previousFields.get(order);
+                && (j != previousFields.get(order)
+                    || fields.get(i).getEmptyFields().size() == 1);
     }
 
     private void makeMove(byte i, byte j) {
