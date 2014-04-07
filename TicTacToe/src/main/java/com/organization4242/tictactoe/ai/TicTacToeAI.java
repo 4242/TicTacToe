@@ -19,18 +19,18 @@ public final class TicTacToeAI implements AI {
     private byte activeField;
 
     public byte getActiveField() {
-        Random r = new Random();
-        if (state.getActiveField() == MainFieldModel.ANY) {
-            activeField = state.getBaseField().getAvailableFields()
-                    .get(r.nextInt(state.getBaseField().getAvailableFields().size()));
-        } else {
-            activeField = state.getActiveField();
-        }
         return activeField;
     }
 
     public TicTacToeAI(MainFieldModel state) {
         this.state = state;
+        Random r = new Random();
+        if (this.state.getActiveField() == MainFieldModel.ANY) {
+            activeField = this.state.getBaseField().getAvailableFields()
+                    .get(r.nextInt(state.getBaseField().getAvailableFields().size()));
+        } else {
+            activeField = this.state.getActiveField();
+        }
     }
 
     public byte canWin (FieldInterface field, State order) {
@@ -54,7 +54,6 @@ public final class TicTacToeAI implements AI {
     public List<Byte> getAvailablePoints() {
         List<Byte> emptyFields = new ArrayList<Byte>();
         State order = state.getOrder();
-        activeField = getActiveField();
         FieldInterface currentField = state.getFields().get(activeField);
         for (int i = 0; i < currentField.size(); i++) {
             if (currentField.get(i) == State.EMPTY && state.canMove(activeField, (byte) i, order)) {
@@ -66,7 +65,6 @@ public final class TicTacToeAI implements AI {
 
     public byte nextMove() {
         Random r = new Random();
-        activeField = getActiveField();
         FieldInterface field = state.getFields().get(activeField);
         State order = state.getOrder();
 
