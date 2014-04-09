@@ -26,8 +26,6 @@ public final class MainFieldModel extends AbstractModel {
     private FieldContainer baseField;
     private List<FieldInterface> fields;
 
-    private AI ai;
-
     private static MainFieldModel instance = new MainFieldModel();
 
     public byte getActiveField() {
@@ -82,7 +80,6 @@ public final class MainFieldModel extends AbstractModel {
             }
             baseField.add(fields.get(i));
         }
-        ai = new TicTacToeAI(this);
     }
 
     public boolean canMove(byte i, byte j, State order) {
@@ -129,6 +126,7 @@ public final class MainFieldModel extends AbstractModel {
             byte[] coordinates = (byte[]) pce.getNewValue();
             if (canMove(coordinates[0], coordinates[1], order)) {
                 makeMove(coordinates[0], coordinates[1]);
+                AI ai = new TicTacToeAI(this);
                 byte move = ai.nextMove();
                 makeMove(ai.getActiveField(), move);
             }
