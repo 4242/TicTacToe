@@ -4,12 +4,14 @@ import android.graphics.Color;
 import android.util.Log;
 import com.organization4242.tictactoe.controller.Controller;
 import com.organization4242.tictactoe.framework.Graphics;
+import com.organization4242.tictactoe.framework.Graphics.PixmapFormat;
 import com.organization4242.tictactoe.framework.Screen;
 import com.organization4242.tictactoe.framework.implementations.AndroidGraphics;
 import com.organization4242.tictactoe.model.MainFieldModel;
 import com.organization4242.tictactoe.model.MainFieldModelMessage;
 
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -28,6 +30,11 @@ public class GameScreen extends Screen {
     private Graphics g = AndroidGraphics.getInstance();
 
     public GameScreen() {
+        try {
+            Assets.X = g.newPixmap("X.png", PixmapFormat.ARGB888);
+        } catch (IOException e) {
+            Log.d("Error importing file", e.getMessage());
+        }
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             int numberOfColumns = (int) Math.sqrt(MainFieldModel.NUMBER_OF_FIELDS);
             int width = g.getWidth() < g.getHeight()
@@ -53,6 +60,7 @@ public class GameScreen extends Screen {
         for (int i = 0; i < MainFieldModel.NUMBER_OF_FIELDS; i++) {
             field.get(i).draw();
         }
+        //g.drawPixmap(Assets.X,g.getWidth(),0);
     }
 
     private void clear() {
