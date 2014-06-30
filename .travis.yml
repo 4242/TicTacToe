@@ -18,4 +18,6 @@ before_install:
 #  - chmod +x $PWD/.travis_wait_for_emulator.sh
 #  - $PWD/.travis_wait_for_emulator.sh
 
-script: cd ./TicTacToe && gradle build
+script: 
+  - chmod +x ./gradlew
+  - cd ./TicTacToe && gradle build
