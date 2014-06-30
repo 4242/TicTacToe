@@ -9,14 +9,6 @@ expect "Do you accept the license *:"
 send -- "y\r"
 expect "Do you accept the license *:"
 send -- "y\r"
-expect "Do you accept the license *:"
-send -- "y\r"
-expect "Do you accept the license *:"
-send -- "y\r"
-expect "Do you accept the license *:"
-send -- "y\r"
-expect "Do you accept the license *:"
-send -- "y\r"
 interact
 
 # WORKAROUND: for some reason we need to download following extras separately (otherwise we will get PkgVersion=2 instead of PkgVersion=2.0.0)
