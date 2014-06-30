@@ -1,4 +1,5 @@
 #!/bin/sh
+
 # Script installs Android SDK
 
 sudo apt-get update -q
